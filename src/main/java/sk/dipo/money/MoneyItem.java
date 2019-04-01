@@ -1,4 +1,4 @@
-package sk.psuchtak.money;
+package sk.dipo.money;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;

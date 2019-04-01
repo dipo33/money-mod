@@ -1,4 +1,4 @@
-package sk.psuchtak.money;
+package sk.dipo.money;
 
 public class Reference {
 	public static final String MODID = "dipomoneymod";

@@ -1,4 +1,4 @@
-package sk.psuchtak.money;
+package sk.dipo.money;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
