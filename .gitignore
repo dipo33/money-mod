@@ -19,7 +19,12 @@ build
 
 # other
 eclipse
-logs
 run
 .class
 classes
+logs
+forge-1.7.10-10.13.4.1614-1.7.10-changelog.txt
+CREDITS-fml.txt
+LICENSE-fml.txt
+MinecraftForge-Credits.txt
+MinecraftForge-License.txt
