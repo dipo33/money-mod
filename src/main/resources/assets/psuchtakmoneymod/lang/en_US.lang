@@ -1,0 +1,15 @@
+item.cent1.name=0.01€
+item.cent2.name=0.02€
+item.cent5.name=0.05€
+item.cent10.name=0.10€
+item.cent20.name=0.20€
+item.cent50.name=0.50€
+item.euro1.name=1.00€
+item.euro2.name=2.00€
+item.euro5.name=5.00€
+item.euro10.name=10.00€
+item.euro20.name=20.00€
+item.euro50.name=50.00€
+item.euro100.name=100.00€
+item.euro200.name=200.00€
+item.euro500.name=500.00€
