@@ -1,13 +1,13 @@
 [
 {
-  "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
+  "modid": "dipomoneymod",
+  "name": "Dipo's Money Mod",
+  "description": "Minecraft mod that adds Euro money to the game. It contains coins from 0.01€ to 2.00€ and bills from 5.00€ to 500.00€.",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["ExampleDude"],
+  "authorList": ["Dipo", "ProsteJakub"],
   "credits": "The Forge and FML guys, for making this example",
   "logoFile": "",
   "screenshots": [],
