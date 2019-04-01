@@ -2,7 +2,7 @@
 {
   "modid": "dipomoneymod",
   "name": "Dipo's Money Mod",
-  "description": "Minecraft mod that adds Euro money to the game. It contains coins from 0.01€ to 2.00€ and bills from 5.00€ to 500.00€.",
+  "description": "Minecraft mod that adds Euro money to the game. It contains coins from 0.01e to 2.00e and bills from 5.00e to 500.00e.",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
