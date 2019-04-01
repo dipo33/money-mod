@@ -9,7 +9,7 @@
   "updateUrl": "",
   "authorList": ["Dipo", "ProsteJakub"],
   "credits": "The Forge and FML guys, for making this example",
-  "logoFile": "",
+  "logoFile": "assets/dipomoneymod/textures/gui/logo.png",
   "screenshots": [],
   "dependencies": []
 }
