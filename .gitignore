@@ -2,5 +2,6 @@
 !/src/
 !gradlew*
 !/gradle/
-!/README.md
 !build.gradle
+!/README.md
+!.gitignore
