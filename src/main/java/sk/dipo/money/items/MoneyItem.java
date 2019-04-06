@@ -1,6 +1,8 @@
-package sk.dipo.money;
+package sk.dipo.money.items;
 
 import net.minecraft.item.Item;
+import sk.dipo.money.MoneyMod;
+import sk.dipo.money.utils.Reference;
 
 public class MoneyItem extends Item {
 

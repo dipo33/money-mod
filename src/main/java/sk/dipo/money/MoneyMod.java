@@ -7,6 +7,9 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import sk.dipo.money.items.MoneyItems;
+import sk.dipo.money.recipes.CraftingRecipes;
+import sk.dipo.money.utils.Reference;
 
 @Mod(modid = Reference.MODID, name = Reference.MOD_NAME, version = Reference.VERSION)
 public class MoneyMod {
