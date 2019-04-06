@@ -5,11 +5,14 @@ import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 
 @Mod(modid = Reference.MODID, name = Reference.MOD_NAME, version = Reference.VERSION)
 public class MoneyMod {
 
+	public static CreativeTabs moneyTab = new MoneyTab();
+	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		registerItem(MoneyItems.cent1);
