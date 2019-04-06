@@ -13,5 +13,4 @@ public class MoneyTab extends CreativeTabs {
 	public Item getTabIconItem() {
 		return MoneyItems.euro2;
 	}
-
 }
