@@ -87,7 +87,5 @@ public class CraftingRecipes {
 		GameRegistry.addShapelessRecipe(new ItemStack(MoneyItems.euro500, 1), MoneyItems.euro100, MoneyItems.euro100, MoneyItems.euro100, MoneyItems.euro100, MoneyItems.euro100);
 		GameRegistry.addShapelessRecipe(new ItemStack(MoneyItems.euro500, 1), MoneyItems.euro200, MoneyItems.euro200, MoneyItems.euro100);
 		
-		//	GameRegistry.addShapelessRecipe(new ItemStack(Vending.blockVendingMachine, 1), MoneyItems.euro100, MoneyItems.euro100, MoneyItems.euro100);
-		
 	}
 }
