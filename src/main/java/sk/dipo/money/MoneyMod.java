@@ -30,6 +30,7 @@ public class MoneyMod {
 		registerItem(MoneyItems.euro100);
 		registerItem(MoneyItems.euro200);
 		registerItem(MoneyItems.euro500);
+		registerItem(MoneyItems.wallet);
 	}
 
 	@EventHandler
