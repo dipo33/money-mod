@@ -20,5 +20,5 @@ public class MoneyItems {
 	public static final Item euro200 = new MoneyItem("euro200");
 	public static final Item euro500 = new MoneyItem("euro500");
 
-	public static final Item wallet = new MoneyItem("wallet");
+	public static final Item wallet = new ItemWallet("wallet");
 }

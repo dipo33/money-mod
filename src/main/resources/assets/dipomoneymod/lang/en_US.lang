@@ -16,3 +16,5 @@ item.euro500.name=500.00€
 item.wallet.name=Wallet
 
 itemGroup.money_tab=Dipo's Money Mod
+
+container.wallet=Wallet
