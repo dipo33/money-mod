@@ -11,6 +11,9 @@ public class ContainerWallet extends Container {
 
 	private final IInventory walletInventory;
 
+	private static final int INV_START = InventoryWallet.INV_SIZE, INV_END = INV_START + 26, HOTBAR_START = INV_END + 1,
+			HOTBAR_END = HOTBAR_START + 8;
+
 	public ContainerWallet(InventoryPlayer playerInventory, IInventory inventory) {
 		walletInventory = inventory;
 
@@ -37,8 +40,43 @@ public class ContainerWallet extends Container {
 	}
 
 	@Override
-	public ItemStack transferStackInSlot(EntityPlayer player, int p_82846_2_) {
-		return super.transferStackInSlot(player, p_82846_2_);
+	public ItemStack transferStackInSlot(EntityPlayer player, int index) {
+		ItemStack itemstack = null;
+		Slot slot = (Slot) this.inventorySlots.get(index);
+
+		if (slot != null && slot.getHasStack()) {
+			ItemStack itemstack1 = slot.getStack();
+			itemstack = itemstack1.copy();
+
+			if (index < INV_START) {
+				if (!this.mergeItemStack(itemstack1, INV_START, HOTBAR_END + 1, true)) {
+					return null;
+				}
+
+				slot.onSlotChange(itemstack1, itemstack);
+			} else {
+				SlotWallet slotOut = (SlotWallet) this.inventorySlots.get(0);
+				if (slotOut.isItemValid(itemstack1)) {
+					if (!this.mergeItemStack(itemstack1, 0, INV_START, false)) {
+						return null;
+					}
+				}
+			}
+
+			if (itemstack1.stackSize == 0) {
+				slot.putStack((ItemStack) null);
+			} else {
+				slot.onSlotChanged();
+			}
+
+			if (itemstack1.stackSize == itemstack.stackSize) {
+				return null;
+			}
+
+			slot.onPickupFromSlot(player, itemstack1);
+		}
+
+		return itemstack;
 	}
 
 	@Override
