@@ -19,10 +19,10 @@ public class CommonProxy {
 	}
 
 	public void init(FMLInitializationEvent event) {
-		MoneyMod.LOGGER.info("FMLInitializationEvent on Server side");
 		CraftingRecipes.registerRecipes();
 		NetworkRegistry.INSTANCE.registerGuiHandler(MoneyMod.instance, new GuiHandler());
 		OreDicts.registerOreDicts();
+		MoneyMod.LOGGER.info("FMLInitializationEvent on Server side");
 	}
 
 	public void postInit(FMLPostInitializationEvent event) {

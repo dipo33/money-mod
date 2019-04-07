@@ -9,6 +9,7 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void preInit(FMLPreInitializationEvent event) {
+		super.preInit(event);
 		MoneyMod.LOGGER.info("FMLPreInitializationEvent on Client side");
 	}
 
@@ -20,6 +21,7 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void postInit(FMLPostInitializationEvent event) {
+		super.postInit(event);
 		MoneyMod.LOGGER.info("FMLPostInitializationEvent on Client side");
 	}
 }
