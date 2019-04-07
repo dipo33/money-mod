@@ -23,16 +23,16 @@ public class MoneyMod {
 	@Instance(Reference.MODID)
 	public static MoneyMod instance;
 
-	public MoneyMod() {
-		instance = this;
-	}
-
 	@SidedProxy(clientSide = Reference.CLIENT_PROXY, serverSide = Reference.SERVER_PROXY)
 	public static CommonProxy proxy;
 	
 	public static final Logger LOGGER = LogManager.getLogger(Reference.MODID);
 
 	public static CreativeTabs moneyTab = new MoneyTab();
+
+	public MoneyMod() {
+		instance = this;
+	}
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
