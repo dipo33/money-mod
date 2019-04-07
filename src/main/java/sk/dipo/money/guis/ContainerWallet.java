@@ -42,7 +42,5 @@ public class ContainerWallet extends Container {
 	}
 
 	@Override
-	protected boolean mergeItemStack(ItemStack stack, int p_75135_2_, int p_75135_3_, boolean p_75135_4_) {
-		return super.mergeItemStack(stack, p_75135_2_, p_75135_3_, p_75135_4_);
 	}
 }
