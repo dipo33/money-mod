@@ -7,6 +7,7 @@ import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import sk.dipo.money.MoneyMod;
 import sk.dipo.money.handlers.GuiHandler;
+import sk.dipo.money.register.OreDicts;
 
 public class CommonProxy {
 
@@ -17,6 +18,7 @@ public class CommonProxy {
 	public void init(FMLInitializationEvent event) {
 		MoneyMod.LOGGER.info("FMLInitializationEvent on Server side");
 		NetworkRegistry.INSTANCE.registerGuiHandler(MoneyMod.instance, new GuiHandler());
+		OreDicts.registerOreDicts();
 	}
 
 	public void postInit(FMLPostInitializationEvent event) {

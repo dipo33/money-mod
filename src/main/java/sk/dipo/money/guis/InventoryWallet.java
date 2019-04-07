@@ -1,11 +1,13 @@
 package sk.dipo.money.guis;
 
+import java.util.ArrayList;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import sk.dipo.money.items.MoneyItems;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class InventoryWallet implements IInventory {
 
@@ -91,8 +93,11 @@ public class InventoryWallet implements IInventory {
 
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack stack) {
-		if (stack.getItem() == MoneyItems.cent1)
-			return true;
+		ArrayList<ItemStack> moneys = OreDictionary.getOres("moneyDipo");
+		for (ItemStack money : moneys)
+			if (OreDictionary.itemMatches(money, stack, false)) {
+				return true;
+			}
 		return false;
 	}
 
@@ -145,7 +150,7 @@ public class InventoryWallet implements IInventory {
 		}
 
 		nbt.setTag("WalletItems", nbttaglist);
-		
+
 		return nbt;
 	}
 }
