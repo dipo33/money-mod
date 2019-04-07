@@ -1,5 +1,8 @@
 package sk.dipo.money;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -26,6 +29,8 @@ public class MoneyMod {
 
 	@SidedProxy(clientSide = Reference.CLIENT_PROXY, serverSide = Reference.SERVER_PROXY)
 	public static IProxy proxy;
+	
+	public static final Logger LOGGER = LogManager.getLogger(Reference.MODID);
 
 	public static CreativeTabs moneyTab = new MoneyTab();
 
