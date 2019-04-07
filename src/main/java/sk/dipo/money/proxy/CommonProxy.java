@@ -8,11 +8,13 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import sk.dipo.money.MoneyMod;
 import sk.dipo.money.handlers.GuiHandler;
 import sk.dipo.money.recipes.CraftingRecipes;
+import sk.dipo.money.register.ItemRegister;
 import sk.dipo.money.register.OreDicts;
 
 public class CommonProxy {
 
 	public void preInit(FMLPreInitializationEvent event) {
+		ItemRegister.registerItems();
 		MoneyMod.LOGGER.info("FMLPreInitializationEvent on Server side");
 	}
 
