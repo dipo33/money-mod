@@ -5,7 +5,7 @@
   "description": "Minecraft mod that adds Euro money to the game. It contains coins from 0.01e to 2.00e and bills from 5.00e to 500.00e.",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "",
+  "url": "https://minecraft.curseforge.com/projects/dipos-money-mod",
   "updateUrl": "",
   "authorList": ["Dipo", "ProsteJakub"],
   "credits": "The Forge and FML guys, for making this example",
