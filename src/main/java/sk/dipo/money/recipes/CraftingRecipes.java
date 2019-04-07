@@ -1,6 +1,7 @@
 package sk.dipo.money.recipes;
 
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import sk.dipo.money.items.MoneyItems;
 
@@ -88,5 +89,7 @@ public class CraftingRecipes {
 		GameRegistry.addShapelessRecipe(new ItemStack(MoneyItems.euro500, 1), MoneyItems.euro100, MoneyItems.euro100, MoneyItems.euro100, MoneyItems.euro100, MoneyItems.euro100);
 		GameRegistry.addShapelessRecipe(new ItemStack(MoneyItems.euro500, 1), MoneyItems.euro200, MoneyItems.euro200, MoneyItems.euro100);
 		
+		// Wallet
+		GameRegistry.addShapedRecipe(new ItemStack(MoneyItems.wallet), " S ", "LLL", " S ", 'S', Items.string, 'L', Items.leather);
 	}
 }
