@@ -14,7 +14,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import sk.dipo.money.items.MoneyItems;
 import sk.dipo.money.proxy.CommonProxy;
-import sk.dipo.money.recipes.CraftingRecipes;
 import sk.dipo.money.utils.Reference;
 
 @Mod(modid = Reference.MODID, name = Reference.MOD_NAME, version = Reference.VERSION)
