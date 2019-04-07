@@ -5,44 +5,44 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
 
 public class ContainerWallet extends Container {
 
 	private final IInventory walletInventory;
-	@SuppressWarnings("unused")
-	private final int sizeInventory;
 
 	public ContainerWallet(InventoryPlayer playerInventory, IInventory inventory) {
 		walletInventory = inventory;
-		sizeInventory = walletInventory.getSizeInventory();
 
-		for (int j = 0; j < 3; ++j)
-        {
-            for (int k = 0; k < 9; ++k)
-            {
-                this.addSlotToContainer(new SlotWallet(walletInventory, k + j * 9, 8 + k * 18, 18 + j * 18));
-            }
-        }
+		for (int j = 0; j < 3; ++j) {
+			for (int k = 0; k < 9; ++k) {
+				this.addSlotToContainer(new SlotWallet(walletInventory, k + j * 9, 8 + k * 18, 18 + j * 18));
+			}
+		}
 
-        for (int j = 0; j < 3; ++j)
-        {
-            for (int k = 0; k < 9; ++k)
-            {
-                this.addSlotToContainer(new Slot(playerInventory, k + j * 9 + 9, 8 + k * 18, 85 + j * 18));
-            }
-        }
+		for (int j = 0; j < 3; ++j) {
+			for (int k = 0; k < 9; ++k) {
+				this.addSlotToContainer(new Slot(playerInventory, k + j * 9 + 9, 8 + k * 18, 85 + j * 18));
+			}
+		}
 
-        for (int j = 0; j < 9; ++j)
-        {
-            this.addSlotToContainer(new Slot(playerInventory, j, 8 + j * 18, 143));
-        }
+		for (int j = 0; j < 9; ++j) {
+			this.addSlotToContainer(new Slot(playerInventory, j, 8 + j * 18, 143));
+		}
 	}
 
 	@Override
 	public boolean canInteractWith(EntityPlayer player) {
 		return walletInventory.isUseableByPlayer(player);
 	}
-	
-	//craftlisteners
 
+	@Override
+	public ItemStack transferStackInSlot(EntityPlayer player, int p_82846_2_) {
+		return super.transferStackInSlot(player, p_82846_2_);
+	}
+
+	@Override
+	protected boolean mergeItemStack(ItemStack stack, int p_75135_2_, int p_75135_3_, boolean p_75135_4_) {
+		return super.mergeItemStack(stack, p_75135_2_, p_75135_3_, p_75135_4_);
+	}
 }
