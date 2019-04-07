@@ -57,7 +57,6 @@ public class MoneyMod {
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		proxy.init(event);
-		CraftingRecipes.registerRecipes();
 	}
 
 	public static void registerItem(Item item) {
