@@ -13,7 +13,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import sk.dipo.money.items.MoneyItems;
-import sk.dipo.money.proxy.IProxy;
+import sk.dipo.money.proxy.CommonProxy;
 import sk.dipo.money.recipes.CraftingRecipes;
 import sk.dipo.money.utils.Reference;
 
@@ -28,7 +28,7 @@ public class MoneyMod {
 	}
 
 	@SidedProxy(clientSide = Reference.CLIENT_PROXY, serverSide = Reference.SERVER_PROXY)
-	public static IProxy proxy;
+	public static CommonProxy proxy;
 	
 	public static final Logger LOGGER = LogManager.getLogger(Reference.MODID);
 
