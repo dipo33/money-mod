@@ -9,101 +9,65 @@ import sk.dipo.money.items.MoneyItems;
 
 public class InventoryWallet implements IInventory {
 
-	ItemStack base;
-
-	public InventoryWallet(ItemStack base) {
-		this.base = base;
-	}
+	private final ItemStack base;
+	public static final int INV_SIZE = 27;
 
 	private String walletCustomName;
-	private ItemStack[] itemStacks = new ItemStack[27];
+	private ItemStack[] inventory = new ItemStack[INV_SIZE];
 
-	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
-		NBTTagList nbttaglist = new NBTTagList();
+	public InventoryWallet(ItemStack stack) {
+		this.base = stack;
 
-		for (int i = 0; i < this.itemStacks.length; ++i) {
-			if (this.itemStacks[i] != null) {
-				NBTTagCompound nbttagcompound1 = new NBTTagCompound();
-				nbttagcompound1.setByte("Slot", (byte) i);
-				this.itemStacks[i].writeToNBT(nbttagcompound1);
-				nbttaglist.appendTag(nbttagcompound1);
-			}
-		}
+		if (!stack.hasTagCompound())
+			stack.setTagCompound(new NBTTagCompound());
 
-		nbt.setTag("Items", nbttaglist);
-
-		if (this.hasCustomInventoryName()) {
-			nbt.setString("CustomName", this.walletCustomName);
-		}
-		return nbt;
+		readFromNBT(stack.getTagCompound());
 	}
 
 	@Override
 	public int getSizeInventory() {
-		return itemStacks.length;
+		return inventory.length;
 	}
 
 	@Override
-	public ItemStack getStackInSlot(int i) {
-		return itemStacks[i];
+	public ItemStack getStackInSlot(int slot) {
+		return inventory[slot];
 	}
 
 	@Override
-	public ItemStack decrStackSize(int i, int count) {
-		System.out.println("FUCKIN decr");
-		if (this.itemStacks[i] != null) {
-			ItemStack itemstack;
-
-			if (this.itemStacks[i].stackSize <= count) {
-				itemstack = this.itemStacks[i];
-				this.itemStacks[i] = null;
-
-				return itemstack;
+	public ItemStack decrStackSize(int slot, int count) {
+		ItemStack stack = getStackInSlot(slot);
+		if (stack != null) {
+			if (stack.stackSize > count) {
+				stack = stack.splitStack(count);
+				onInventoryChanged();
 			} else {
-				itemstack = this.itemStacks[i].splitStack(count);
-
-				if (this.itemStacks[i].stackSize == 0) {
-					this.itemStacks[i] = null;
-				}
-
-				return itemstack;
+				setInventorySlotContents(slot, null);
 			}
-		} else {
-			return null;
 		}
+		return stack;
 	}
 
 	@Override
-	public ItemStack getStackInSlotOnClosing(int i) {
-		base.setTagCompound(writeToNBT(base.hasTagCompound() ? base.getTagCompound() : new NBTTagCompound()));
-		System.out.println("FUCKIN CLOSE");
-		if (itemStacks[i] != null) {
-			ItemStack itemstack = itemStacks[i];
-			itemStacks[i] = null;
-			return itemstack;
-		} else {
-			return null;
-		}
+	public ItemStack getStackInSlotOnClosing(int slot) {
+		ItemStack stack = getStackInSlot(slot);
+		setInventorySlotContents(slot, null);
+		return stack;
 	}
 
 	@Override
-	public void setInventorySlotContents(int i, ItemStack stack) {
-		base.setTagCompound(writeToNBT(base.hasTagCompound() ? base.getTagCompound() : new NBTTagCompound()));
-		System.out.println("SETTIN " + i);
-		this.itemStacks[i] = stack;
+	public void setInventorySlotContents(int slot, ItemStack stack) {
+		inventory[slot] = stack;
 
-		if (stack != null && stack.stackSize > this.getInventoryStackLimit()) {
-			stack.stackSize = this.getInventoryStackLimit();
+		if (stack != null && stack.stackSize > getInventoryStackLimit()) {
+			stack.stackSize = getInventoryStackLimit();
 		}
+		onInventoryChanged();
 	}
 
 	@Override
 	public String getInventoryName() {
 		return hasCustomInventoryName() ? walletCustomName : "container.wallet";
-	}
-
-	public void setInventoryName(String name) {
-		this.walletCustomName = name;
 	}
 
 	@Override
@@ -121,14 +85,8 @@ public class InventoryWallet implements IInventory {
 	}
 
 	@Override
-	public boolean isUseableByPlayer(EntityPlayer p_70300_1_) {
+	public boolean isUseableByPlayer(EntityPlayer player) {
 		return true;
-	}
-
-	@Override
-	public void closeInventory() {
-		System.out.println("WRITING TO NBT");
-		base.setTagCompound(writeToNBT(base.getTagCompound()));
 	}
 
 	@Override
@@ -140,7 +98,54 @@ public class InventoryWallet implements IInventory {
 
 	@Override
 	public void openInventory() {
-		// TODO Auto-generated method stub
+	}
 
+	@Override
+	public void closeInventory() {
+	}
+
+	private void onInventoryChanged() {
+		for (int i = 0; i < getSizeInventory(); ++i) {
+			if (getStackInSlot(i) != null && getStackInSlot(i).stackSize == 0) {
+				inventory[i] = null;
+			}
+		}
+
+		writeToNBT(base.getTagCompound());
+	}
+
+	public void readFromNBT(NBTTagCompound nbt) {
+		NBTTagList nbttaglist = nbt.getTagList("WalletItems", 10);
+
+		for (int i = 0; i < nbttaglist.tagCount(); ++i) {
+			NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
+			int slot = nbttagcompound1.getByte("Slot") & 255;
+
+			if (slot >= 0 && slot < getSizeInventory()) {
+				inventory[slot] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
+			}
+		}
+
+		NBTTagCompound nbtt = nbt.getCompoundTag("display");
+		if (nbtt != null && nbtt.hasKey("Name", 8)) {
+			walletCustomName = nbtt.getString("Name");
+		}
+	}
+
+	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+		NBTTagList nbttaglist = new NBTTagList();
+
+		for (int i = 0; i < this.inventory.length; ++i) {
+			if (this.inventory[i] != null) {
+				NBTTagCompound nbttagcompound1 = new NBTTagCompound();
+				nbttagcompound1.setByte("Slot", (byte) i);
+				this.inventory[i].writeToNBT(nbttagcompound1);
+				nbttaglist.appendTag(nbttagcompound1);
+			}
+		}
+
+		nbt.setTag("WalletItems", nbttaglist);
+		
+		return nbt;
 	}
 }
