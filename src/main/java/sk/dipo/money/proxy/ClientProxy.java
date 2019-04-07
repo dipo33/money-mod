@@ -3,30 +3,23 @@ package sk.dipo.money.proxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import cpw.mods.fml.common.network.NetworkRegistry;
 import sk.dipo.money.MoneyMod;
-import sk.dipo.money.handlers.GuiHandler;
 
 public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void preInit(FMLPreInitializationEvent event) {
-		System.out.println("on Client side");
+		MoneyMod.LOGGER.info("FMLPreInitializationEvent on Client side");
 	}
 
 	@Override
 	public void init(FMLInitializationEvent event) {
 		super.init(event);
-		System.out.println("on Client side");
+		MoneyMod.LOGGER.info("FMLInitializationEvent on Client side");
 	}
 
 	@Override
 	public void postInit(FMLPostInitializationEvent event) {
-		System.out.println("on Client side");
-	}
-
-	@Override
-	public void serverStarting(FMLServerStartingEvent event) {
+		MoneyMod.LOGGER.info("FMLPostInitializationEvent on Client side");
 	}
 }

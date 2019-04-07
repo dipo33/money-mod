@@ -11,13 +11,16 @@ import sk.dipo.money.handlers.GuiHandler;
 public class CommonProxy {
 
 	public void preInit(FMLPreInitializationEvent event) {
+		MoneyMod.LOGGER.info("FMLPreInitializationEvent on Server side");
 	}
 
 	public void init(FMLInitializationEvent event) {
+		MoneyMod.LOGGER.info("FMLInitializationEvent on Server side");
 		NetworkRegistry.INSTANCE.registerGuiHandler(MoneyMod.instance, new GuiHandler());
 	}
 
 	public void postInit(FMLPostInitializationEvent event) {
+		MoneyMod.LOGGER.info("FMLPostInitializationEvent on Server side");
 	}
 
 	public void serverStarting(FMLServerStartingEvent event) {
