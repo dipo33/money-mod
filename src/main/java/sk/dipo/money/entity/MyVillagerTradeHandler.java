@@ -16,5 +16,9 @@ public class MyVillagerTradeHandler implements VillagerRegistry.IVillageTradeHan
 
 	@Override
 	public void manipulateTradesForVillager(EntityVillager villager, MerchantRecipeList recipeList, Random random) {
+		if (villager.getProfession() == VILLAGER_EXCHANGER_ID) {
+			recipeList.addToListWithCheck(
+					new MerchantRecipe(new ItemStack(Items.emerald), new ItemStack(MoneyItems.euro100)));
+		}
 	}
 }
