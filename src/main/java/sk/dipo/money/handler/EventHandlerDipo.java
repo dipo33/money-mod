@@ -1,4 +1,4 @@
-package sk.dipo.money.handlers;
+package sk.dipo.money.handler;
 
 import java.util.ArrayList;
 

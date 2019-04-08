@@ -5,7 +5,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import sk.dipo.money.MoneyMod;
-import sk.dipo.money.recipes.CraftingRecipes;
+import sk.dipo.money.recipe.CraftingRecipes;
 import sk.dipo.money.register.CommonRegisters;
 import sk.dipo.money.register.ItemRegister;
 import sk.dipo.money.register.OreDicts;

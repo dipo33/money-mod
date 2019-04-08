@@ -1,9 +1,9 @@
-package sk.dipo.money.recipes;
+package sk.dipo.money.recipe;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import sk.dipo.money.items.MoneyItems;
+import sk.dipo.money.item.MoneyItems;
 
 public class CraftingRecipes {
 	public static void registerRecipes() {

@@ -1,10 +1,10 @@
-package sk.dipo.money.items;
+package sk.dipo.money.item;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import sk.dipo.money.MoneyMod;
-import sk.dipo.money.handlers.GuiHandler;
+import sk.dipo.money.handler.GuiHandler;
 
 public class ItemWallet extends MoneyItem {
 

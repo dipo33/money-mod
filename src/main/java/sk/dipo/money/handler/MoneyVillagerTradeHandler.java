@@ -1,4 +1,4 @@
-package sk.dipo.money.handlers;
+package sk.dipo.money.handler;
 
 import java.util.Random;
 
@@ -8,7 +8,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
-import sk.dipo.money.items.MoneyItems;
+import sk.dipo.money.item.MoneyItems;
 
 public class MoneyVillagerTradeHandler implements VillagerRegistry.IVillageTradeHandler {
 

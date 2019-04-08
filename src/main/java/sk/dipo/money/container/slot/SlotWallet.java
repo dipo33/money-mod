@@ -1,4 +1,4 @@
-package sk.dipo.money.guis;
+package sk.dipo.money.container.slot;
 
 import java.util.ArrayList;
 

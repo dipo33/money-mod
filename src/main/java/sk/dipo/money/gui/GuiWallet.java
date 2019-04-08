@@ -1,4 +1,4 @@
-package sk.dipo.money.guis;
+package sk.dipo.money.gui;
 
 import org.lwjgl.opengl.GL11;
 
@@ -6,6 +6,8 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
+import sk.dipo.money.container.ContainerWallet;
+import sk.dipo.money.inventory.InventoryWallet;
 
 public class GuiWallet extends GuiContainer {
 

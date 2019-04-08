@@ -21,7 +21,7 @@ import net.minecraft.entity.monster.EntityWitch;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import sk.dipo.money.items.MoneyItems;
+import sk.dipo.money.item.MoneyItems;
 
 public class Utils {
 

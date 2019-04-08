@@ -1,7 +1,7 @@
 package sk.dipo.money.register;
 
 import net.minecraftforge.oredict.OreDictionary;
-import sk.dipo.money.items.MoneyItems;
+import sk.dipo.money.item.MoneyItems;
 
 public class OreDicts {
 	public static void registerOreDicts() {

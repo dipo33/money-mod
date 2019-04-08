@@ -2,7 +2,7 @@ package sk.dipo.money;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
-import sk.dipo.money.items.MoneyItems;
+import sk.dipo.money.item.MoneyItems;
 
 public class MoneyTab extends CreativeTabs {
 

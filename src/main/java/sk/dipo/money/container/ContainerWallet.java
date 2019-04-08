@@ -1,4 +1,4 @@
-package sk.dipo.money.guis;
+package sk.dipo.money.container;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -6,6 +6,8 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import sk.dipo.money.container.slot.SlotWallet;
+import sk.dipo.money.inventory.InventoryWallet;
 
 public class ContainerWallet extends Container {
 

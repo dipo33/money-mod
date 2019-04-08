@@ -1,11 +1,11 @@
-package sk.dipo.money.handlers;
+package sk.dipo.money.handler;
 
 import cpw.mods.fml.common.network.IGuiHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-import sk.dipo.money.guis.ContainerWallet;
-import sk.dipo.money.guis.GuiWallet;
-import sk.dipo.money.guis.InventoryWallet;
+import sk.dipo.money.container.ContainerWallet;
+import sk.dipo.money.gui.GuiWallet;
+import sk.dipo.money.inventory.InventoryWallet;
 
 public class GuiHandler implements IGuiHandler {
 
@@ -30,5 +30,4 @@ public class GuiHandler implements IGuiHandler {
 			return null;
 		}
 	}
-
 }
