@@ -18,7 +18,7 @@ public class MoneyVillagerTradeHandler implements VillagerRegistry.IVillageTrade
 	public void manipulateTradesForVillager(EntityVillager villager, MerchantRecipeList recipeList, Random random) {
 		if (villager.getProfession() == VILLAGER_EXCHANGER_ID) {
 			recipeList.addToListWithCheck(
-					new MerchantRecipe(new ItemStack(Items.emerald), new ItemStack(MoneyItems.euro100)));
+					new MerchantRecipe(new ItemStack(Items.emerald), new ItemStack(MoneyItems.euro5)));
 		}
 	}
 }
