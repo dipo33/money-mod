@@ -9,7 +9,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class GuiWallet extends GuiContainer {
 
-	private static final ResourceLocation grinderGuiTextures = new ResourceLocation("textures/gui/container/generic_54.png");
+	private static final ResourceLocation walletGuiTextures = new ResourceLocation("textures/gui/container/generic_54.png");
 	private final InventoryPlayer inventoryPlayer;
 	private final InventoryWallet inventoryWallet;
 
@@ -28,7 +28,7 @@ public class GuiWallet extends GuiContainer {
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.getTextureManager().bindTexture(grinderGuiTextures);
+        this.mc.getTextureManager().bindTexture(walletGuiTextures);
         int k = (this.width - this.xSize) / 2;
         int l = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(k, l - 1, 0, 0, this.xSize, 71);
