@@ -5,9 +5,9 @@ import cpw.mods.fml.common.registry.VillagerRegistry;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import sk.dipo.money.MoneyMod;
-import sk.dipo.money.entity.MyVillagerTradeHandler;
 import sk.dipo.money.handlers.EventHandlerDipo;
 import sk.dipo.money.handlers.GuiHandler;
+import sk.dipo.money.handlers.MyVillagerTradeHandler;
 
 public class CommonRegisters {
 

@@ -1,4 +1,4 @@
-package sk.dipo.money.entity;
+package sk.dipo.money.handlers;
 
 import java.util.Random;
 
