@@ -6,6 +6,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import sk.dipo.money.MoneyMod;
 import sk.dipo.money.recipe.CraftingRecipes;
+import sk.dipo.money.register.BlockRegister;
 import sk.dipo.money.register.CommonRegisters;
 import sk.dipo.money.register.ItemRegister;
 import sk.dipo.money.register.OreDicts;
@@ -14,6 +15,7 @@ public class CommonProxy {
 
 	public void preInit(FMLPreInitializationEvent event) {
 		ItemRegister.registerItems();
+		BlockRegister.registerBlocks();
 		MoneyMod.LOGGER.info("FMLPreInitializationEvent on Server side");
 	}
 
