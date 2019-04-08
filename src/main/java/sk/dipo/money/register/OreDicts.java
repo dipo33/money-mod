@@ -4,6 +4,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import sk.dipo.money.item.MoneyItems;
 
 public class OreDicts {
+	
 	public static void registerOreDicts() {
 		OreDictionary.registerOre("moneyDipo", MoneyItems.cent1);
 		OreDictionary.registerOre("moneyDipo", MoneyItems.cent2);

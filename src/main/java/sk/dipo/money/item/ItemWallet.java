@@ -20,8 +20,10 @@ public class ItemWallet extends MoneyItem {
 
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-		if (!world.isRemote)
+		if (!world.isRemote) {
 			player.openGui(MoneyMod.instance, GuiHandler.GUI_WALLET, world, 0, 0, 0);
+		}
+		
 		return stack;
 	}
 }

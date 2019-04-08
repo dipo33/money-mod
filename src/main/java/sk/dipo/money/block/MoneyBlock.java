@@ -13,5 +13,4 @@ public class MoneyBlock extends Block {
 		setBlockTextureName(Reference.MODID + ":" + name);
 		setCreativeTab(MoneyMod.moneyTab);
 	}
-
 }

@@ -20,8 +20,9 @@ public class InventoryWallet implements IInventory {
 	public InventoryWallet(ItemStack stack) {
 		this.base = stack;
 
-		if (!stack.hasTagCompound())
+		if (!stack.hasTagCompound()) {
 			stack.setTagCompound(new NBTTagCompound());
+		}
 
 		readFromNBT(stack.getTagCompound());
 	}
@@ -47,6 +48,7 @@ public class InventoryWallet implements IInventory {
 				setInventorySlotContents(slot, null);
 			}
 		}
+		
 		return stack;
 	}
 
@@ -54,6 +56,7 @@ public class InventoryWallet implements IInventory {
 	public ItemStack getStackInSlotOnClosing(int slot) {
 		ItemStack stack = getStackInSlot(slot);
 		setInventorySlotContents(slot, null);
+		
 		return stack;
 	}
 
@@ -64,6 +67,7 @@ public class InventoryWallet implements IInventory {
 		if (stack != null && stack.stackSize > getInventoryStackLimit()) {
 			stack.stackSize = getInventoryStackLimit();
 		}
+		
 		onInventoryChanged();
 	}
 
@@ -98,6 +102,7 @@ public class InventoryWallet implements IInventory {
 			if (OreDictionary.itemMatches(money, stack, false)) {
 				return true;
 			}
+		
 		return false;
 	}
 

@@ -5,6 +5,7 @@ import net.minecraft.block.Block;
 import sk.dipo.money.block.MoneyBlocks;
 
 public class BlockRegister {
+	
 	public static void registerBlocks() {
 		registerBlock(MoneyBlocks.atm);
 	}

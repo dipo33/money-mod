@@ -7,5 +7,4 @@ public class BlockATM extends MoneyBlock {
 	protected BlockATM(String name) {
 		super(Material.iron, name);
 	}
-
 }

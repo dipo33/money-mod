@@ -5,6 +5,7 @@ import net.minecraft.item.Item;
 import sk.dipo.money.item.MoneyItems;
 
 public class ItemRegister {
+	
 	public static void registerItems() {
 		registerItem(MoneyItems.cent1);
 		registerItem(MoneyItems.cent2);

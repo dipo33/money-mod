@@ -90,6 +90,7 @@ public class Utils {
 		case 50000:
 			return MoneyItems.euro500;
 		}
+		
 		return null;
 	}
 
@@ -110,6 +111,7 @@ public class Utils {
 				}
 			}
 		}
+		
 		return itemsToDrop;
 	}
 }
