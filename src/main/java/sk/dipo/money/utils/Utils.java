@@ -35,7 +35,6 @@ public class Utils {
 		LOW_TIER = new ArrayList<Class<? extends Entity>>();
 		LOW_TIER.add(EntitySkeleton.class);
 		LOW_TIER.add(EntityCreeper.class);
-		LOW_TIER.add(EntityPigZombie.class);
 		LOW_TIER.add(EntitySpider.class);
 		LOW_TIER.add(EntitySilverfish.class);
 
@@ -46,12 +45,13 @@ public class Utils {
 		HIGH_TIER = new ArrayList<Class<? extends Entity>>();
 		HIGH_TIER.add(EntityGhast.class);
 		HIGH_TIER.add(EntityBlaze.class);
-		// TODO Can't find WitherSkeleton
+		HIGH_TIER.add(EntityPigZombie.class);
 
-		RARE_TIER = new ArrayList<Class<? extends Entity>>();
+		RARE_TIER = new ArrayList<Class<? extends Entity>>(); //WITHER + DRAGON = 50€
 		RARE_TIER.add(EntityEnderman.class);
 		RARE_TIER.add(EntityWitch.class);
 		RARE_TIER.add(EntityMagmaCube.class); // TODO Magma slime by size
+		// TODO Can't find WitherSkeleton
 
 		LEGENDARY_TIER = new ArrayList<Class<? extends Entity>>();
 		LEGENDARY_TIER.add(EntityWither.class);
