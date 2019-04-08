@@ -6,6 +6,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import sk.dipo.money.MoneyMod;
 import sk.dipo.money.recipes.CraftingRecipes;
+import sk.dipo.money.register.CommonRegisters;
 import sk.dipo.money.register.ItemRegister;
 import sk.dipo.money.register.OreDicts;
 
@@ -21,6 +22,7 @@ public class CommonProxy {
 		CraftingRecipes.registerRecipes();
 		CommonRegisters.registerVillagers();
 		CommonRegisters.registerHandlers();
+		CommonRegisters.registerEventHandlers();
 		MoneyMod.LOGGER.info("FMLInitializationEvent on Server side");
 	}
 

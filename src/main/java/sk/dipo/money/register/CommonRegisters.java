@@ -11,6 +11,9 @@ import sk.dipo.money.handlers.GuiHandler;
 
 public class CommonRegisters {
 
+	public static void registerEventHandlers() {
+		MinecraftForge.EVENT_BUS.register(new EventHandlerDipo());
+	}
 
 	public static void registerHandlers() {
 		NetworkRegistry.INSTANCE.registerGuiHandler(MoneyMod.instance, new GuiHandler());
