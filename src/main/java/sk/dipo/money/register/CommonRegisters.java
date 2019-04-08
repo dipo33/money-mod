@@ -7,7 +7,7 @@ import net.minecraftforge.common.MinecraftForge;
 import sk.dipo.money.MoneyMod;
 import sk.dipo.money.handlers.EventHandlerDipo;
 import sk.dipo.money.handlers.GuiHandler;
-import sk.dipo.money.handlers.MyVillagerTradeHandler;
+import sk.dipo.money.handlers.MoneyVillagerTradeHandler;
 
 public class CommonRegisters {
 
@@ -20,10 +20,10 @@ public class CommonRegisters {
 	}
 
 	public static void registerVillagers() {
-		VillagerRegistry.instance().registerVillageTradeHandler(MyVillagerTradeHandler.VILLAGER_EXCHANGER_ID,
-				new MyVillagerTradeHandler());
-		VillagerRegistry.instance().registerVillagerId(MyVillagerTradeHandler.VILLAGER_EXCHANGER_ID);
-		VillagerRegistry.instance().registerVillagerSkin(MyVillagerTradeHandler.VILLAGER_EXCHANGER_ID,
+		VillagerRegistry.instance().registerVillageTradeHandler(MoneyVillagerTradeHandler.VILLAGER_EXCHANGER_ID,
+				new MoneyVillagerTradeHandler());
+		VillagerRegistry.instance().registerVillagerId(MoneyVillagerTradeHandler.VILLAGER_EXCHANGER_ID);
+		VillagerRegistry.instance().registerVillagerSkin(MoneyVillagerTradeHandler.VILLAGER_EXCHANGER_ID,
 				new ResourceLocation("chow", "textures/entity.png"));
 		VillagerRegistry.getRegisteredVillagers();
 	}

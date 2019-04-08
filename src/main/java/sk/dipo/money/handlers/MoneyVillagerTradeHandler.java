@@ -10,7 +10,7 @@ import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
 import sk.dipo.money.items.MoneyItems;
 
-public class MyVillagerTradeHandler implements VillagerRegistry.IVillageTradeHandler {
+public class MoneyVillagerTradeHandler implements VillagerRegistry.IVillageTradeHandler {
 
 	public static final int VILLAGER_EXCHANGER_ID = 10;
 
