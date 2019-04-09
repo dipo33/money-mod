@@ -25,6 +25,7 @@ public class CommonProxy {
 		CommonRegisters.registerVillagers();
 		CommonRegisters.registerHandlers();
 		CommonRegisters.registerEventHandlers();
+		CommonRegisters.registerTileEntities();
 		MoneyMod.LOGGER.info("FMLInitializationEvent on Server side");
 	}
 

@@ -6,39 +6,47 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import sk.dipo.money.container.slot.SlotWallet;
-import sk.dipo.money.inventory.InventoryWallet;
+import sk.dipo.money.container.slot.SlotATMInput;
+import sk.dipo.money.container.slot.SlotATMOutput;
+import sk.dipo.money.tileentity.TileEntityATM;
 
-public class ContainerWallet extends Container {
+public class ContainerATM extends Container {
 
-	private final IInventory walletInventory;
+	private final IInventory inventoryATM;
 
-	private static final int INV_START = InventoryWallet.INV_SIZE, INV_END = INV_START + 26, HOTBAR_START = INV_END + 1,
+	private static final int INV_START = TileEntityATM.INV_SIZE, INV_END = INV_START + 26, HOTBAR_START = INV_END + 1,
 			HOTBAR_END = HOTBAR_START + 8;
 
-	public ContainerWallet(InventoryPlayer playerInventory, IInventory inventory) {
-		walletInventory = inventory;
+	public ContainerATM(InventoryPlayer playerInventory, IInventory inventoryATM) {
+		this.inventoryATM = inventoryATM;
 
-		for (int j = 0; j < 3; ++j) {
-			for (int k = 0; k < 9; ++k) {
-				this.addSlotToContainer(new SlotWallet(walletInventory, k + j * 9, 8 + k * 18, 17 + j * 18));
+		for (int i = 0; i < 2; ++i) {
+			for (int j = 0; j < 2; ++j) {
+				for (int k = 0; k < 9; ++k) {
+					if (i == 0)
+						this.addSlotToContainer(
+								new SlotATMInput(inventoryATM, k + j * 9 + i * 18, 42 + k * 18, j * 18 + i * 50 + 40));
+					else
+						this.addSlotToContainer(
+								new SlotATMOutput(inventoryATM, k + j * 9 + i * 18, 42 + k * 18, j * 18 + i * 50 + 40));
+				}
 			}
 		}
 
 		for (int j = 0; j < 3; ++j) {
 			for (int k = 0; k < 9; ++k) {
-				this.addSlotToContainer(new Slot(playerInventory, k + j * 9 + 9, 8 + k * 18, 84 + j * 18));
+				this.addSlotToContainer(new Slot(playerInventory, k + j * 9 + 9, 42 + k * 18, 140 + j * 18));
 			}
 		}
 
 		for (int j = 0; j < 9; ++j) {
-			this.addSlotToContainer(new Slot(playerInventory, j, 8 + j * 18, 142));
+			this.addSlotToContainer(new Slot(playerInventory, j, 42 + j * 18, 198));
 		}
 	}
 
 	@Override
 	public boolean canInteractWith(EntityPlayer player) {
-		return walletInventory.isUseableByPlayer(player);
+		return inventoryATM.isUseableByPlayer(player);
 	}
 
 	@Override
@@ -57,9 +65,9 @@ public class ContainerWallet extends Container {
 
 				slot.onSlotChange(itemstack1, itemstack);
 			} else {
-				SlotWallet slotOut = (SlotWallet) this.inventorySlots.get(0);
+				SlotATMInput slotOut = (SlotATMInput) this.inventorySlots.get(0);
 				if (slotOut.isItemValid(itemstack1)) {
-					if (!this.mergeItemStack(itemstack1, 0, INV_START, false)) {
+					if (!this.mergeItemStack(itemstack1, 0, 18, false)) {
 						return null;
 					}
 				}
@@ -79,14 +87,5 @@ public class ContainerWallet extends Container {
 		}
 
 		return itemstack;
-	}
-
-	@Override
-	public ItemStack slotClick(int slot, int button, int flag, EntityPlayer player) {
-		if (slot >= 0 && getSlot(slot) != null && getSlot(slot).getStack() == player.getHeldItem()) {
-			return null;
-		}
-
-		return super.slotClick(slot, button, flag, player);
 	}
 }

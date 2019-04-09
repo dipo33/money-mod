@@ -21,3 +21,6 @@ tile.atm.name=ATM Machine
 itemGroup.money_tab=Dipo's Money Mod
 
 container.wallet=Wallet
+container.atm=ATM Machine
+container.atm_in=ATM Input
+container.atm_out=ATM Output
