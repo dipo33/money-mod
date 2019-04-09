@@ -26,6 +26,5 @@ public class CommonRegisters {
 		VillagerRegistry.instance().registerVillagerId(MoneyVillagerTradeHandler.VILLAGER_EXCHANGER_ID);
 		VillagerRegistry.instance().registerVillagerSkin(MoneyVillagerTradeHandler.VILLAGER_EXCHANGER_ID,
 				new ResourceLocation(Reference.MODID, "textures/entity/exchanger.png"));
-		VillagerRegistry.getRegisteredVillagers();
 	}
 }

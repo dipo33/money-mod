@@ -13,8 +13,9 @@ import sk.dipo.money.utils.Utils;
 public class EventHandlerDipo {
 
 	@SubscribeEvent(priority = EventPriority.NORMAL, receiveCanceled = true)
-	public void onEvent(LivingDropsEvent event) {
-		if (Utils.LOW_TIER.contains(event.entity.getClass()) || (event.entity instanceof EntityZombie && !((EntityZombie) event.entity).isVillager())) {
+	public void onEntityDropEvent(LivingDropsEvent event) {
+		if (Utils.LOW_TIER.contains(event.entity.getClass())
+				|| (event.entity instanceof EntityZombie && !((EntityZombie) event.entity).isVillager())) {
 			ArrayList<EntityItem> itemsToDrop = Utils.randomCoinValue(event, 1, 2);
 			event.drops.addAll(itemsToDrop);
 		} else if (Utils.MID_TIER.contains(event.entity.getClass())) {
