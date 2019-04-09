@@ -23,6 +23,7 @@ public class ItemRegister {
 		registerItem(MoneyItems.euro200);
 		registerItem(MoneyItems.euro500);
 		registerItem(MoneyItems.wallet);
+		registerItem(MoneyItems.creditCard);
 	}
 
 	private static void registerItem(Item item) {
