@@ -7,6 +7,9 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityZombie;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import sk.dipo.money.utils.Utils;
 
@@ -21,7 +24,7 @@ public class EventHandler {
 		} else if (Utils.MID_TIER.contains(event.entity.getClass())) {
 			ArrayList<EntityItem> itemsToDrop = Utils.randomCoinValue(event, 2, 5);
 			event.drops.addAll(itemsToDrop);
-		} else if (Utils.HIGH_TIER.contains(event.entity.getClass())) {
+		} else if (Utils.HIGH_TIER.contains(event.entity.getClass(  ))) {
 			ArrayList<EntityItem> itemsToDrop = Utils.randomCoinValue(event, 5, 10);
 			event.drops.addAll(itemsToDrop);
 		} else if (Utils.RARE_TIER.contains(event.entity.getClass())
@@ -35,5 +38,17 @@ public class EventHandler {
 			ArrayList<EntityItem> itemsToDrop = Utils.randomCoinValue(event, 50, 100);
 			event.drops.addAll(itemsToDrop);
 		}
+	}
+
+	@SubscribeEvent(priority = EventPriority.NORMAL, receiveCanceled = true)
+	public void onPlayerJoin(EntityJoinWorldEvent event) {
+		if (event.world.isRemote)
+			return;
+		if (!(event.entity instanceof EntityPlayer))
+			return;
+		EntityPlayer player = (EntityPlayer) event.entity;
+		NBTTagCompound nbt = player.getEntityData();
+		if (!nbt.hasKey("Balance"))
+			nbt.setInteger("Balance", 50000);
 	}
 }
