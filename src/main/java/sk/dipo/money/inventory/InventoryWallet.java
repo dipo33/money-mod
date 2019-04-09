@@ -1,13 +1,11 @@
 package sk.dipo.money.inventory;
 
-import java.util.ArrayList;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraftforge.oredict.OreDictionary;
+import sk.dipo.money.utils.Utils;
 
 public class InventoryWallet implements IInventory {
 
@@ -97,13 +95,7 @@ public class InventoryWallet implements IInventory {
 
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack stack) {
-		ArrayList<ItemStack> moneys = OreDictionary.getOres("moneyDipo");
-		for (ItemStack money : moneys)
-			if (OreDictionary.itemMatches(money, stack, false)) {
-				return true;
-			}
-		
-		return false;
+		return Utils.isItemMoney(stack);
 	}
 
 	@Override

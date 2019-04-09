@@ -21,6 +21,7 @@ import net.minecraft.entity.monster.EntityWitch;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.oredict.OreDictionary;
 import sk.dipo.money.item.MoneyItems;
 
 public class Utils {
@@ -92,6 +93,16 @@ public class Utils {
 		}
 		
 		return null;
+	}
+	
+	public static boolean isItemMoney(ItemStack stack) {
+		ArrayList<ItemStack> moneys = OreDictionary.getOres("moneyDipo");
+		for (ItemStack money : moneys)
+			if (OreDictionary.itemMatches(money, stack, false)) {
+				return true;
+			}
+
+		return false;
 	}
 
 	public static ArrayList<EntityItem> randomCoinValue(LivingDropsEvent event, int low, int high) {
