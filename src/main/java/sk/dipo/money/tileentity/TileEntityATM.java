@@ -1,5 +1,7 @@
 package sk.dipo.money.tileentity;
 
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
@@ -8,7 +10,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import sk.dipo.money.utils.Utils;
 
-public class TileEntityATM extends TileEntity implements ISidedInventory {
+public class TileEntityATM extends TileEntity implements ISidedInventory, Runnable {
 
 	private static final int[] SLOTS_TOP = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 };
 	private static final int[] SLOTS_SIDE = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 };
@@ -18,6 +20,10 @@ public class TileEntityATM extends TileEntity implements ISidedInventory {
 	public static final int INV_SIZE = 36;
 	private ItemStack[] inventory = new ItemStack[INV_SIZE];
 	private String customName;
+	public String message = "msg.atm.not_signed";
+	public String msgToWrite = "msg.atm.not_signed";
+	public boolean isGuiOpen = false;
+	public FontRenderer fontRenderer;
 
 	@Override
 	public int getSizeInventory() {
@@ -147,5 +153,33 @@ public class TileEntityATM extends TileEntity implements ISidedInventory {
 	@Override
 	public boolean canExtractItem(int slot, ItemStack stack, int side) {
 		return (slot > 17 && slot < 36 && side == 0);
+	}
+
+	@Override
+	public void run() {
+		while (isGuiOpen)
+			try {
+				String temp = I18n.format(msgToWrite, new Object[0]);
+				message = temp;
+				if (fontRenderer.getStringWidth(temp) > 156) {
+					message = fontRenderer.trimStringToWidth(temp, 156);
+				}
+
+				for (int i = 0; i < 30; i++) {
+					Thread.sleep(50);
+					if (!isGuiOpen)
+						break;
+				}
+				while (fontRenderer.getStringWidth(temp) > 156 && isGuiOpen) {
+					Thread.sleep(100);
+					temp = temp.substring(1);
+					message = fontRenderer.trimStringToWidth(temp, 156);
+					if (fontRenderer.getStringWidth(temp) < 200)
+						temp += "        " + I18n.format(msgToWrite, new Object[0]);
+				}
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		message = fontRenderer.trimStringToWidth(I18n.format(msgToWrite, new Object[0]), 156);
 	}
 }

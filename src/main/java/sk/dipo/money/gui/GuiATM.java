@@ -16,6 +16,7 @@ public class GuiATM extends GuiContainer {
 	private static final ResourceLocation atmGuiTexture = new ResourceLocation(Reference.MODID, "textures/gui/container/atm.png");
 	private final InventoryPlayer inventoryPlayer;
 	private final IInventory inventoryATM;
+	private final TileEntityATM te;
 
 	public GuiATM(InventoryPlayer inventoryPlayer, TileEntityATM inventoryATM) {
 		super(new ContainerATM(inventoryPlayer, inventoryATM));
@@ -23,14 +24,23 @@ public class GuiATM extends GuiContainer {
 		this.inventoryATM = inventoryATM;
 		this.xSize = 243;
 		this.ySize = 222;
+		this.te = inventoryATM;
 	}
 	
 	@Override
 	protected void drawGuiContainerForegroundLayer(int p_146979_1_, int p_146979_2_) {
+		if (!this.te.isGuiOpen) {
+			this.te.fontRenderer = this.fontRendererObj;
+			this.te.isGuiOpen = true;
+			Thread thread = new Thread(this.te);
+			thread.start();
+		}
+		this.te.fontRenderer = this.fontRendererObj;
 		this.fontRendererObj.drawString(this.inventoryATM.hasCustomInventoryName() ? this.inventoryATM.getInventoryName() : I18n.format(this.inventoryATM.getInventoryName(), new Object[0]), 42, 5, 4210752);
 		this.fontRendererObj.drawString(I18n.format(this.inventoryPlayer.getInventoryName(), new Object[0]), 42, this.ySize - 93, 4210752);
 		this.fontRendererObj.drawString(I18n.format("container.atm_in", new Object[0]), 42, 31, 4210752);
 		this.fontRendererObj.drawString(I18n.format("container.atm_out", new Object[0]), 42, 81, 4210752);
+		this.fontRendererObj.drawString(I18n.format(te.message, new Object[0]), 44, 17, 16777215);
 	}
 
 	@Override
@@ -40,5 +50,11 @@ public class GuiATM extends GuiContainer {
         int k = (this.width - this.xSize + 67) / 2;
         int l = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(k, l, 0, 0, this.xSize, this.ySize);
+	}
+	
+	@Override
+	public void onGuiClosed() {
+		super.onGuiClosed();
+		this.te.isGuiOpen = false;
 	}
 }

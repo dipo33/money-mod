@@ -24,3 +24,6 @@ container.wallet=Wallet
 container.atm=ATM Machine
 container.atm_in=ATM Input
 container.atm_out=ATM Output
+
+msg.atm.in_use=Someone is already using the ATM machine, you will have to wait...
+msg.atm.not_signed=Your credit card is not signed! Do you want to sign it ?
