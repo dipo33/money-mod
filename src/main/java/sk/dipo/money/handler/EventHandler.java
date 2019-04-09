@@ -10,7 +10,7 @@ import net.minecraft.entity.monster.EntityZombie;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import sk.dipo.money.utils.Utils;
 
-public class EventHandlerDipo {
+public class EventHandler {
 
 	@SubscribeEvent(priority = EventPriority.NORMAL, receiveCanceled = true)
 	public void onEntityDropEvent(LivingDropsEvent event) {

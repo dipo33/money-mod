@@ -6,7 +6,7 @@ import cpw.mods.fml.common.registry.VillagerRegistry;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import sk.dipo.money.MoneyMod;
-import sk.dipo.money.handler.EventHandlerDipo;
+import sk.dipo.money.handler.EventHandler;
 import sk.dipo.money.handler.GuiHandler;
 import sk.dipo.money.handler.MoneyVillagerTradeHandler;
 import sk.dipo.money.tileentity.TileEntityATM;
@@ -15,7 +15,7 @@ import sk.dipo.money.utils.Reference;
 public class CommonRegisters {
 
 	public static void registerEventHandlers() {
-		MinecraftForge.EVENT_BUS.register(new EventHandlerDipo());
+		MinecraftForge.EVENT_BUS.register(new EventHandler());
 	}
 
 	public static void registerHandlers() {
