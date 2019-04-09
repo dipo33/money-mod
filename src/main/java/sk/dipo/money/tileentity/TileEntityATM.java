@@ -23,6 +23,7 @@ public class TileEntityATM extends TileEntity implements ISidedInventory, Runnab
 	public String message = "msg.atm.not_signed";
 	public String msgToWrite = "msg.atm.not_signed";
 	public boolean isGuiOpen = false;
+	public boolean openable = true;
 	public FontRenderer fontRenderer;
 
 	@Override

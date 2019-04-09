@@ -13,12 +13,15 @@ import sk.dipo.money.tileentity.TileEntityATM;
 public class ContainerATM extends Container {
 
 	private final IInventory inventoryATM;
+	private final TileEntityATM te;
 
 	private static final int INV_START = TileEntityATM.INV_SIZE, INV_END = INV_START + 26, HOTBAR_START = INV_END + 1,
 			HOTBAR_END = HOTBAR_START + 8;
 
-	public ContainerATM(InventoryPlayer playerInventory, IInventory inventoryATM) {
+	public ContainerATM(InventoryPlayer playerInventory, TileEntityATM inventoryATM) {
 		this.inventoryATM = inventoryATM;
+		this.te = inventoryATM;
+		this.te.openable = false;
 
 		for (int i = 0; i < 2; ++i) {
 			for (int j = 0; j < 2; ++j) {
@@ -87,5 +90,11 @@ public class ContainerATM extends Container {
 		}
 
 		return itemstack;
+	}
+	
+	@Override
+	public void onContainerClosed(EntityPlayer p_75134_1_) {
+		super.onContainerClosed(p_75134_1_);
+		this.te.openable = true;
 	}
 }
