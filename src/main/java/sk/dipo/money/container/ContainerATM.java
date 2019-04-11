@@ -91,7 +91,16 @@ public class ContainerATM extends Container {
 
 		return itemstack;
 	}
-	
+
+	@Override
+	public ItemStack slotClick(int slot, int button, int flag, EntityPlayer player) {
+		if (slot >= 0 && getSlot(slot) != null && getSlot(slot).getStack() == player.getHeldItem()) {
+			return null;
+		}
+
+		return super.slotClick(slot, button, flag, player);
+	}
+
 	@Override
 	public void onContainerClosed(EntityPlayer p_75134_1_) {
 		super.onContainerClosed(p_75134_1_);
