@@ -8,6 +8,8 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import sk.dipo.money.container.slot.SlotATMInput;
 import sk.dipo.money.container.slot.SlotATMOutput;
+import sk.dipo.money.network.PacketDispatcher;
+import sk.dipo.money.network.packet.client.OpenCloseAtmMessage;
 import sk.dipo.money.tileentity.TileEntityATM;
 
 public class ContainerATM extends Container {
@@ -21,7 +23,6 @@ public class ContainerATM extends Container {
 	public ContainerATM(InventoryPlayer playerInventory, TileEntityATM inventoryATM) {
 		this.inventoryATM = inventoryATM;
 		this.te = inventoryATM;
-		this.te.openable = false;
 
 		for (int i = 0; i < 2; ++i) {
 			for (int j = 0; j < 2; ++j) {
@@ -102,8 +103,12 @@ public class ContainerATM extends Container {
 	}
 
 	@Override
-	public void onContainerClosed(EntityPlayer p_75134_1_) {
-		super.onContainerClosed(p_75134_1_);
+	public void onContainerClosed(EntityPlayer player) {
+		super.onContainerClosed(player);
 		this.te.openable = true;
+		if (!player.worldObj.isRemote)
+			PacketDispatcher.sendToDimension(
+					new OpenCloseAtmMessage(true, this.te.xCoord, this.te.yCoord, this.te.zCoord),
+					player.worldObj.provider.dimensionId);
 	}
 }
