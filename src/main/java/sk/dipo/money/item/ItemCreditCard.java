@@ -13,6 +13,7 @@ public class ItemCreditCard extends MoneyItem {
 
 	public ItemCreditCard(String name) {
 		super(name);
+		setMaxStackSize(1);
 	}
 
 	@Override
