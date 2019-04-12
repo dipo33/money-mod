@@ -1,11 +1,14 @@
 package sk.dipo.money.tileentity;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
+import sk.dipo.money.network.PacketDispatcher;
+import sk.dipo.money.network.packet.client.AtmMovingTextMessage;
 import sk.dipo.money.utils.Utils;
 
 public class TileEntityATM extends TileEntity implements ISidedInventory {
@@ -19,6 +22,7 @@ public class TileEntityATM extends TileEntity implements ISidedInventory {
 	private ItemStack[] inventory = new ItemStack[INV_SIZE];
 	private String customName;
 	public boolean openable = true;
+	private EntityPlayer user;
 
 	@Override
 	public int getSizeInventory() {
@@ -150,6 +154,22 @@ public class TileEntityATM extends TileEntity implements ISidedInventory {
 		return (slot > 17 && slot < 36 && side == 0);
 	}
 
+	public EntityPlayer getUser() {
+		return user;
+	}
+
+	public void setUser(EntityPlayer user) {
+		this.user = user;
+		ItemStack creditCard = user.getHeldItem();
+		NBTTagCompound nbt = creditCard.getTagCompound();
+		if (nbt != null && nbt.hasKey("OwnerUUID")) {
+			if (nbt.hasKey("PIN")) {
+				PacketDispatcher.sendTo(new AtmMovingTextMessage("msg.atm.welcome", (short) 2), (EntityPlayerMP) this.user);
 			}
+			PacketDispatcher.sendTo(new AtmMovingTextMessage("msg.atm.create_pin", (short) 1), (EntityPlayerMP) this.user);
+		}
+		else {
+			PacketDispatcher.sendTo(new AtmMovingTextMessage("msg.atm.not_signed", (short) 0), (EntityPlayerMP) this.user);
+		}
 	}
 }
