@@ -4,7 +4,10 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import net.minecraft.entity.player.EntityPlayer;
 import sk.dipo.money.MoneyMod;
+import sk.dipo.money.network.PacketDispatcher;
 import sk.dipo.money.recipe.CraftingRecipes;
 import sk.dipo.money.register.BlockRegister;
 import sk.dipo.money.register.CommonRegisters;
@@ -16,6 +19,7 @@ public class CommonProxy {
 	public void preInit(FMLPreInitializationEvent event) {
 		ItemRegister.registerItems();
 		BlockRegister.registerBlocks();
+		PacketDispatcher.registerPackets();
 		MoneyMod.LOGGER.info("FMLPreInitializationEvent on Server side");
 	}
 
@@ -34,5 +38,9 @@ public class CommonProxy {
 	}
 
 	public void serverStarting(FMLServerStartingEvent event) {
+	}
+
+	public EntityPlayer getPlayerEntity(MessageContext ctx) {
+		return ctx.getServerHandler().playerEntity;
 	}
 }
