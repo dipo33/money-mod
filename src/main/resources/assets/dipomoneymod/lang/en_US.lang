@@ -26,4 +26,9 @@ container.atm_in=ATM Input
 container.atm_out=ATM Output
 
 msg.atm.in_use=Someone is already using the ATM machine, you will have to wait...
-msg.atm.not_signed=Your credit card is not signed! Do you want to sign it ?
+msg.atm.not_signed=Your credit card is not signed! Do you want to sign it ? (Confirm with the green button)
+msg.atm.create_pin=Welcome! Enter your new 4-digit PIN code which will be assigned to this credit card. (Confirm with the green button)
+msg.atm.welcome=Welcome! Enter your PIN to continue.
+
+char.atm.arrow_1=⬆
+char.atm.arrow_2=⬇
