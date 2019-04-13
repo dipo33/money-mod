@@ -23,8 +23,14 @@ public class GuiATM extends GuiContainer implements Runnable {
 	private final InventoryPlayer inventoryPlayer;
 	private final IInventory inventoryATM;
 	private String message;
+	private String PIN = "";
+	private String pinCode = "  ";
+	private short nextPinNum = 0;
+
 	/**
-	 * Phase -1 - No phase Phase 0 - Signing credit card Phase 1 - Creating PIN code
+	 * Phase -1 - No phase 
+	 * Phase 0 - Signing credit card 
+	 * Phase 1 - Creating PIN code
 	 * Phase 2 - Logging to account using PIN code
 	 */
 	private int phase;
@@ -69,6 +75,7 @@ public class GuiATM extends GuiContainer implements Runnable {
 		this.fontRendererObj.drawString(I18n.format("container.atm_in", new Object[0]), 42, 31, 4210752);
 		this.fontRendererObj.drawString(I18n.format("container.atm_out", new Object[0]), 42, 81, 4210752);
 		this.fontRendererObj.drawString(movingText, 44, 17, 16777215);
+		this.fontRendererObj.drawString(pinCode, 219, 27, 16777215);
 	}
 
 	@Override
@@ -106,6 +113,14 @@ public class GuiATM extends GuiContainer implements Runnable {
 			confirm();
 		} else if (button.id == 14) {
 			decline();
+		} else if (button.id > 0 && button.id < 10) {
+			number(button.id);
+		} else if (button.id == 10) {
+			number(0);
+		} else if (button.id == 11) {
+			dot();
+		} else if (button.id == 12) {
+			clear();
 		}
 	}
 
@@ -113,23 +128,36 @@ public class GuiATM extends GuiContainer implements Runnable {
 		if (phase == 0) {
 			System.out.println("Confirmed. Signing...");
 			PacketDispatcher.sendToServer(new SignCreditCardMessage());
+		} else if (phase == 1) {
+			System.out.println("Creating PIN code");
+			PacketDispatcher.sendToServer(new SignCreditCardMessage());
 		}
 	}
 
 	private void decline() {
-		if (phase == 0) {
+		if (phase == 0 || phase == 1 || phase == 2) {
 			Minecraft.getMinecraft().thePlayer.closeScreen();
 			System.out.println("Closing terminal...");
 		}
 	}
 
 	private void clear() {
+		PIN = "";
+		nextPinNum = 0;
+		pinCode = "  ";
 	}
 
 	private void dot() {
 	}
 
 	private void number(int number) {
+		if (phase == 1 || phase == 2) {
+			if (nextPinNum < 4) {
+				PIN += number;
+				nextPinNum++;
+				pinCode += "* ";
+			}
+		}
 	}
 
 	@Override
