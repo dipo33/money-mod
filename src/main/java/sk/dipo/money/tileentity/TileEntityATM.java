@@ -164,11 +164,11 @@ public class TileEntityATM extends TileEntity implements ISidedInventory {
 		NBTTagCompound nbt = creditCard.getTagCompound();
 		if (nbt != null && nbt.hasKey("OwnerUUID")) {
 			if (nbt.hasKey("PIN")) {
-				PacketDispatcher.sendTo(new AtmMovingTextMessage("msg.atm.welcome", (short) 2), (EntityPlayerMP) this.user);
+				PacketDispatcher.sendTo(new AtmMovingTextMessage("msg.atm.login", (short) 2), (EntityPlayerMP) this.user);
+			} else {
+				PacketDispatcher.sendTo(new AtmMovingTextMessage("msg.atm.create_pin", (short) 1), (EntityPlayerMP) this.user);
 			}
-			PacketDispatcher.sendTo(new AtmMovingTextMessage("msg.atm.create_pin", (short) 1), (EntityPlayerMP) this.user);
-		}
-		else {
+		} else {
 			PacketDispatcher.sendTo(new AtmMovingTextMessage("msg.atm.not_signed", (short) 0), (EntityPlayerMP) this.user);
 		}
 	}

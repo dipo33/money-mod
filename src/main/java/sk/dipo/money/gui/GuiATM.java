@@ -12,6 +12,7 @@ import net.minecraft.util.ResourceLocation;
 import sk.dipo.money.container.ContainerATM;
 import sk.dipo.money.gui.button.GuiButtonATM;
 import sk.dipo.money.network.PacketDispatcher;
+import sk.dipo.money.network.packet.server.CreatePinCodeMessage;
 import sk.dipo.money.network.packet.server.SignCreditCardMessage;
 import sk.dipo.money.tileentity.TileEntityATM;
 import sk.dipo.money.utils.Reference;
@@ -32,6 +33,7 @@ public class GuiATM extends GuiContainer implements Runnable {
 	 * Phase 0 - Signing credit card 
 	 * Phase 1 - Creating PIN code
 	 * Phase 2 - Logging to account using PIN code
+	 * Phase 3 - Welcome
 	 */
 	private int phase;
 
@@ -130,7 +132,8 @@ public class GuiATM extends GuiContainer implements Runnable {
 			PacketDispatcher.sendToServer(new SignCreditCardMessage());
 		} else if (phase == 1) {
 			System.out.println("Creating PIN code");
-			PacketDispatcher.sendToServer(new SignCreditCardMessage());
+			PacketDispatcher.sendToServer(new CreatePinCodeMessage(PIN));
+			clear();
 		}
 	}
 
