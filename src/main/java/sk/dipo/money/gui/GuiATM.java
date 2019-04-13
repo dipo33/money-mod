@@ -13,17 +13,20 @@ import sk.dipo.money.container.ContainerATM;
 import sk.dipo.money.gui.button.GuiButtonATM;
 import sk.dipo.money.network.PacketDispatcher;
 import sk.dipo.money.network.packet.server.CreatePinCodeMessage;
+import sk.dipo.money.network.packet.server.LoginMessage;
 import sk.dipo.money.network.packet.server.SignCreditCardMessage;
 import sk.dipo.money.tileentity.TileEntityATM;
 import sk.dipo.money.utils.Reference;
 
 public class GuiATM extends GuiContainer implements Runnable {
 
-	private static final ResourceLocation atmGuiTexture = new ResourceLocation(Reference.MODID,
-			"textures/gui/container/atm.png");
+	private static final ResourceLocation atmGuiTexture = new ResourceLocation(Reference.MODID, "textures/gui/container/atm.png");
 	private final InventoryPlayer inventoryPlayer;
 	private final IInventory inventoryATM;
 	private String message;
+	private short messageType;
+	private int money;
+	private String name;
 	private String PIN = "";
 	private String pinCode = "  ";
 	private short nextPinNum = 0;
@@ -34,6 +37,7 @@ public class GuiATM extends GuiContainer implements Runnable {
 	 * Phase 1 - Creating PIN code
 	 * Phase 2 - Logging to account using PIN code
 	 * Phase 3 - Welcome
+	 * Phase 4 - Card eaten
 	 */
 	private int phase;
 
@@ -52,8 +56,21 @@ public class GuiATM extends GuiContainer implements Runnable {
 		thread.start();
 	}
 
-	public void setPhase(int phase) {
+	public void setParams(int phase) {
 		this.phase = phase;
+		this.messageType = 0;
+	}
+
+	public void setParams(int phase, int money) {
+		this.phase = phase;
+		this.messageType = 1;
+		this.money = money;
+	}
+
+	public void setParams(int phase, String name) {
+		this.phase = phase;
+		this.messageType = 2;
+		this.name = name;
 	}
 
 	public GuiATM(InventoryPlayer inventoryPlayer, TileEntityATM inventoryATM) {
@@ -69,13 +86,11 @@ public class GuiATM extends GuiContainer implements Runnable {
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		this.fontRendererObj
-				.drawString(this.inventoryATM.hasCustomInventoryName() ? this.inventoryATM.getInventoryName()
-						: I18n.format(this.inventoryATM.getInventoryName(), new Object[0]), 42, 5, 4210752);
-		this.fontRendererObj.drawString(I18n.format(this.inventoryPlayer.getInventoryName(), new Object[0]), 42,
-				this.ySize - 93, 4210752);
-		this.fontRendererObj.drawString(I18n.format("container.atm_in", new Object[0]), 42, 31, 4210752);
-		this.fontRendererObj.drawString(I18n.format("container.atm_out", new Object[0]), 42, 81, 4210752);
+		this.fontRendererObj.drawString(this.inventoryATM.hasCustomInventoryName() ? this.inventoryATM.getInventoryName()
+				: I18n.format(this.inventoryATM.getInventoryName(), new Object[0]), 42, 5, 4210752);
+		this.fontRendererObj.drawString(translate(this.inventoryPlayer.getInventoryName()), 42, this.ySize - 93, 4210752);
+		this.fontRendererObj.drawString(translate("container.atm_in"), 42, 31, 4210752);
+		this.fontRendererObj.drawString(translate("container.atm_out"), 42, 81, 4210752);
 		this.fontRendererObj.drawString(movingText, 44, 17, 16777215);
 		this.fontRendererObj.drawString(pinCode, 219, 27, 16777215);
 	}
@@ -105,8 +120,8 @@ public class GuiATM extends GuiContainer implements Runnable {
 		this.buttonList.add(new GuiButtonATM(10, (this.width / 2) + 95, (this.height / 2) - 7, "0", (short) 0));
 		this.buttonList.add(new GuiButtonATM(11, (this.width / 2) + 113, (this.height / 2) - 7, ".", (short) 0));
 		this.buttonList.add(new GuiButtonATM(12, (this.width / 2) + 131, (this.height / 2) - 7, "C", (short) 1));
-		this.buttonList.add(new GuiButtonATM(13, (this.width / 2) + 95, (this.height / 2) + 11, I18n.format("char.atm.arrow_1", new Object[0]), (short) 2));
-		this.buttonList.add(new GuiButtonATM(14, (this.width / 2) + 124, (this.height / 2) + 11, I18n.format("char.atm.arrow_2", new Object[0]), (short) 3));
+		this.buttonList.add(new GuiButtonATM(13, (this.width / 2) + 95, (this.height / 2) + 11, translate("char.atm.arrow_1"), (short) 2));
+		this.buttonList.add(new GuiButtonATM(14, (this.width / 2) + 124, (this.height / 2) + 11, translate("char.atm.arrow_2"), (short) 3));
 	}
 
 	@Override
@@ -132,7 +147,15 @@ public class GuiATM extends GuiContainer implements Runnable {
 			PacketDispatcher.sendToServer(new SignCreditCardMessage());
 		} else if (phase == 1) {
 			System.out.println("Creating PIN code");
+			if (PIN.length() != 4)
+				return;
 			PacketDispatcher.sendToServer(new CreatePinCodeMessage(PIN));
+			clear();
+		} else if (phase == 2) {
+			System.out.println("Logging in...");
+			if (PIN.length() != 4)
+				return;
+			PacketDispatcher.sendToServer(new LoginMessage(PIN));
 			clear();
 		}
 	}
@@ -167,7 +190,7 @@ public class GuiATM extends GuiContainer implements Runnable {
 	public void run() {
 		while (true)
 			try {
-				String temp = I18n.format(message, new Object[0]);
+				String temp = format(translate(message));
 				movingText = temp;
 				if (this.fontRendererObj.getStringWidth(temp) > 156) {
 					movingText = this.fontRendererObj.trimStringToWidth(temp, 156);
@@ -181,11 +204,34 @@ public class GuiATM extends GuiContainer implements Runnable {
 					temp = temp.substring(1);
 					movingText = this.fontRendererObj.trimStringToWidth(temp, 156);
 					if (this.fontRendererObj.getStringWidth(temp) < 200)
-						temp += "        " + I18n.format(message, new Object[0]);
+						temp += "        " + format(translate(message));
 				}
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+	}
+	
+	private String format(String str) {
+		if (messageType == 1) {
+			str = str.replaceAll("@", "%");
+			return String.format(str, toEur());
+		} else if (messageType == 2) {
+			str = str.replaceAll("@", "%");
+			return String.format(str, name);
+		} else {
+			return str;
+		}
+	}
+	
+	private String toEur() {
+		String monety = money + "";
+		String part1 = monety.substring(0, monety.length() - 2);
+		String part2 = monety.substring(monety.length() - 2);
+		return part1 + "." + part2;
+	}
+	
+	private String translate(String str) {
+		return I18n.format(str, new Object[0]);
 	}
 
 	@SuppressWarnings("deprecation")
