@@ -68,7 +68,7 @@ public class GuiATM extends GuiContainer implements Runnable {
 				this.ySize - 93, 4210752);
 		this.fontRendererObj.drawString(I18n.format("container.atm_in", new Object[0]), 42, 31, 4210752);
 		this.fontRendererObj.drawString(I18n.format("container.atm_out", new Object[0]), 42, 81, 4210752);
-		this.fontRendererObj.drawString(I18n.format(movingText, new Object[0]), 44, 17, 16777215);
+		this.fontRendererObj.drawString(movingText, 44, 17, 16777215);
 	}
 
 	@Override
