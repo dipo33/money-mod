@@ -10,6 +10,7 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import net.minecraft.creativetab.CreativeTabs;
+import sk.dipo.money.database.Database;
 import sk.dipo.money.proxy.CommonProxy;
 import sk.dipo.money.utils.Reference;
 
@@ -23,6 +24,8 @@ public class MoneyMod {
 	public static CommonProxy proxy;
 	
 	public static final Logger LOGGER = LogManager.getLogger(Reference.MODID);
+
+	public static Database db;
 
 	public static CreativeTabs moneyTab = new MoneyTab();
 
