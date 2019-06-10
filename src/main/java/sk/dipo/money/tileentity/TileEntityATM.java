@@ -15,8 +15,7 @@ public class TileEntityATM extends TileEntity implements ISidedInventory {
 
 	private static final int[] SLOTS_TOP = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 };
 	private static final int[] SLOTS_SIDE = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 };
-	private static final int[] SLOTS_BOTTOM = { 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34,
-			35 };
+	private static final int[] SLOTS_BOTTOM = { 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35 };
 
 	public static final int INV_SIZE = 36;
 	private ItemStack[] inventory = new ItemStack[INV_SIZE];
@@ -162,9 +161,13 @@ public class TileEntityATM extends TileEntity implements ISidedInventory {
 		this.user = user;
 		ItemStack creditCard = user.getHeldItem();
 		NBTTagCompound nbt = creditCard.getTagCompound();
+
 		if (nbt != null && nbt.hasKey("OwnerUUID")) {
 			if (nbt.hasKey("PIN")) {
-				PacketDispatcher.sendTo(new AtmMovingTextMessage("msg.atm.login", (short) 2), (EntityPlayerMP) this.user);
+				// EntityPlayer owner = user.getHeldItem().getTagCompound().getString("PIN")
+				String name;
+
+				PacketDispatcher.sendTo(new AtmMovingTextMessage("msg.atm.login", (short) 2, "Jelitko"), (EntityPlayerMP) this.user);
 			} else {
 				PacketDispatcher.sendTo(new AtmMovingTextMessage("msg.atm.create_pin", (short) 1), (EntityPlayerMP) this.user);
 			}
