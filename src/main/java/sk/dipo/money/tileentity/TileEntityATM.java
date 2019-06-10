@@ -164,10 +164,8 @@ public class TileEntityATM extends TileEntity implements ISidedInventory {
 
 		if (nbt != null && nbt.hasKey("OwnerUUID")) {
 			if (nbt.hasKey("PIN")) {
-				// EntityPlayer owner = user.getHeldItem().getTagCompound().getString("PIN")
-				String name;
-
-				PacketDispatcher.sendTo(new AtmMovingTextMessage("msg.atm.login", (short) 2, "Jelitko"), (EntityPlayerMP) this.user);
+				String ownerName = nbt.getString("OwnerName");
+				PacketDispatcher.sendTo(new AtmMovingTextMessage("msg.atm.login", (short) 2, ownerName), (EntityPlayerMP) this.user);
 			} else {
 				PacketDispatcher.sendTo(new AtmMovingTextMessage("msg.atm.create_pin", (short) 1), (EntityPlayerMP) this.user);
 			}

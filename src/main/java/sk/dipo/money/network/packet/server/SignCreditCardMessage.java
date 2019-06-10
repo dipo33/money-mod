@@ -28,6 +28,7 @@ public class SignCreditCardMessage implements IMessage {
 			if (nbt == null)
 				nbt = new NBTTagCompound();
 			nbt.setString("OwnerUUID", player.getUniqueID().toString());
+			nbt.setString("OwnerName", player.getDisplayName());
 			player.getHeldItem().setTagCompound(nbt);
 
 			return new AtmMovingTextMessage("msg.atm.create_pin", (short) 1);
