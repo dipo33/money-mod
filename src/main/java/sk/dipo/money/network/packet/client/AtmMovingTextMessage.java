@@ -64,7 +64,7 @@ public class AtmMovingTextMessage implements IMessage {
 	public static class Handler extends AbstractClientMessageHandler<AtmMovingTextMessage> {
 		@Override
 		public IMessage handleClientMessage(EntityPlayer player, AtmMovingTextMessage message, MessageContext ctx) {
-			System.out.println("PRISLA SPRAVA YEEE: " + message.text);
+			System.out.println("PRISLA SPRAVA YEEE: " + message.text + " a typ je " + message.type + " a faza je " + message.phase);
 			if (Minecraft.getMinecraft().currentScreen instanceof GuiATM) {
 				((GuiATM) Minecraft.getMinecraft().currentScreen).setMessage(message.text);
 				if (message.type == 0)

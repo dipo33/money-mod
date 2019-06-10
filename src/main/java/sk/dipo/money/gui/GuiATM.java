@@ -30,6 +30,9 @@ public class GuiATM extends GuiContainer implements Runnable {
 	private String PIN = "";
 	private String pinCode = "  ";
 	private short nextPinNum = 0;
+	private int withdrawValue = 0;
+	private boolean dot = false;
+	private short dotPos = 0;
 
 	/**
 	 * Phase -1 - No phase 
@@ -146,15 +149,15 @@ public class GuiATM extends GuiContainer implements Runnable {
 			System.out.println("Confirmed. Signing...");
 			PacketDispatcher.sendToServer(new SignCreditCardMessage());
 		} else if (phase == 1) {
-			System.out.println("Creating PIN code");
 			if (PIN.length() != 4)
 				return;
+			System.out.println("Creating PIN code");
 			PacketDispatcher.sendToServer(new CreatePinCodeMessage(PIN));
 			clear();
 		} else if (phase == 2) {
-			System.out.println("Logging in...");
 			if (PIN.length() != 4)
 				return;
+			System.out.println("Logging in...");
 			PacketDispatcher.sendToServer(new LoginMessage(PIN));
 			clear();
 		}
@@ -171,9 +174,15 @@ public class GuiATM extends GuiContainer implements Runnable {
 		PIN = "";
 		nextPinNum = 0;
 		pinCode = "  ";
+		withdrawValue = 0;
+		dot = false;
+		dotPos = 0;
 	}
 
 	private void dot() {
+		if (phase == 3) {
+			dot = true;
+		}
 	}
 
 	private void number(int number) {
@@ -182,6 +191,33 @@ public class GuiATM extends GuiContainer implements Runnable {
 				PIN += number;
 				nextPinNum++;
 				pinCode += "* ";
+			}
+		} else if (phase == 3) {
+			if ((withdrawValue + "").length() == 7)
+				return;
+
+			if (withdrawValue != 0) {
+				if (dot) {
+					if (dotPos > 1)
+						return;
+					dotPos++;
+					withdrawValue = Integer.parseInt((withdrawValue + "") + number);
+					String temp = (withdrawValue + "").substring(0, (withdrawValue + "").length() - dotPos);
+					pinCode = (temp.length() == 0 ? "0" : temp) + "." + (withdrawValue + "").substring((withdrawValue + "").length() - dotPos) + "€";
+				} else {
+					withdrawValue = Integer.parseInt((withdrawValue + "") + number);
+					pinCode = withdrawValue + "€";
+				}
+			} else {
+				if (dot) {
+					dotPos++;
+					withdrawValue = Integer.parseInt((withdrawValue + "") + number);
+					String temp = (withdrawValue + "").substring(0, (withdrawValue + "").length() - dotPos);
+					pinCode = (temp.length() == 0 ? "0" : temp) + "." + (withdrawValue + "").substring((withdrawValue + "").length() - dotPos) + "€";
+				} else {
+					withdrawValue = number;
+					pinCode = number + "€";
+				}
 			}
 		}
 	}
@@ -210,7 +246,7 @@ public class GuiATM extends GuiContainer implements Runnable {
 				e.printStackTrace();
 			}
 	}
-	
+
 	private String format(String str) {
 		if (messageType == 1) {
 			str = str.replaceAll("@", "%");
@@ -222,14 +258,14 @@ public class GuiATM extends GuiContainer implements Runnable {
 			return str;
 		}
 	}
-	
+
 	private String toEur() {
 		String monety = money + "";
 		String part1 = monety.substring(0, monety.length() - 2);
 		String part2 = monety.substring(monety.length() - 2);
 		return part1 + "." + part2;
 	}
-	
+
 	private String translate(String str) {
 		return I18n.format(str, new Object[0]);
 	}
