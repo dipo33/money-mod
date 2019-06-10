@@ -16,7 +16,7 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import sk.dipo.money.utils.Utils;
 
-public class EventHandler {
+public class MyEventHandler {
 
 	@SubscribeEvent(priority = EventPriority.NORMAL, receiveCanceled = true)
 	public void onEntityDropEvent(LivingDropsEvent event) {
