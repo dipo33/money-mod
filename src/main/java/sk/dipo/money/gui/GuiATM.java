@@ -15,11 +15,14 @@ import sk.dipo.money.network.PacketDispatcher;
 import sk.dipo.money.network.packet.server.CreatePinCodeMessage;
 import sk.dipo.money.network.packet.server.LoginMessage;
 import sk.dipo.money.network.packet.server.SignCreditCardMessage;
+import sk.dipo.money.network.packet.server.WithdrawMessage;
 import sk.dipo.money.tileentity.TileEntityATM;
 import sk.dipo.money.utils.Reference;
 
 public class GuiATM extends GuiContainer implements Runnable {
 
+	private int posX, posY, posZ;
+	
 	private static final ResourceLocation atmGuiTexture = new ResourceLocation(Reference.MODID, "textures/gui/container/atm.png");
 	private final InventoryPlayer inventoryPlayer;
 	private final IInventory inventoryATM;
@@ -35,12 +38,9 @@ public class GuiATM extends GuiContainer implements Runnable {
 	private short dotPos = 0;
 
 	/**
-	 * Phase -1 - No phase 
-	 * Phase 0 - Signing credit card 
-	 * Phase 1 - Creating PIN code
-	 * Phase 2 - Logging to account using PIN code
-	 * Phase 3 - Welcome
-	 * Phase 4 - Card eaten
+	 * Phase -1 - No phase Phase 0 - Signing credit card Phase 1 - Creating PIN code
+	 * Phase 2 - Logging to account using PIN code Phase 3 - Welcome Phase 4 - Card
+	 * eaten
 	 */
 	private int phase;
 
@@ -79,6 +79,9 @@ public class GuiATM extends GuiContainer implements Runnable {
 	public GuiATM(InventoryPlayer inventoryPlayer, TileEntityATM inventoryATM) {
 		super(new ContainerATM(inventoryPlayer, inventoryATM));
 		this.inventoryPlayer = inventoryPlayer;
+		this.posX = inventoryATM.xCoord;
+		this.posY = inventoryATM.yCoord;
+		this.posZ = inventoryATM.zCoord;
 		this.inventoryATM = inventoryATM;
 		this.xSize = 243;
 		this.ySize = 222;
@@ -167,6 +170,16 @@ public class GuiATM extends GuiContainer implements Runnable {
 		if (phase == 0 || phase == 1 || phase == 2) {
 			Minecraft.getMinecraft().thePlayer.closeScreen();
 			System.out.println("Closing terminal...");
+		} else if (phase == 3) {
+			if (withdrawValue == 0)
+				return;
+			if (!dot || (dot && dotPos == 0))
+				PacketDispatcher.sendToServer(new WithdrawMessage(withdrawValue * 100, this.posX, this.posY, this.posZ));
+			else if (dot && dotPos == 1)
+				PacketDispatcher.sendToServer(new WithdrawMessage(withdrawValue * 10, this.posX, this.posY, this.posZ));
+			else if (dot && dotPos == 2)
+				PacketDispatcher.sendToServer(new WithdrawMessage(withdrawValue, this.posX, this.posY, this.posZ));
+			System.out.println("Withdrawing...");
 		}
 	}
 
@@ -212,7 +225,7 @@ public class GuiATM extends GuiContainer implements Runnable {
 				if (dot) {
 					dotPos++;
 					withdrawValue = Integer.parseInt((withdrawValue + "") + number);
-					String temp = (withdrawValue + "").substring(0, (withdrawValue + "").length() - dotPos);
+					String temp = (withdrawValue + "").substring(0, (withdrawValue + "").length() - dotPos); // TODO neda sa napisat 0.01
 					pinCode = (temp.length() == 0 ? "0" : temp) + "." + (withdrawValue + "").substring((withdrawValue + "").length() - dotPos) + "€";
 				} else {
 					withdrawValue = number;

@@ -48,7 +48,7 @@ public class Utils {
 		HIGH_TIER.add(EntityBlaze.class);
 		HIGH_TIER.add(EntityPigZombie.class);
 
-		RARE_TIER = new ArrayList<Class<? extends Entity>>(); //WITHER + DRAGON = 50€
+		RARE_TIER = new ArrayList<Class<? extends Entity>>(); // WITHER + DRAGON = 50€
 		RARE_TIER.add(EntityEnderman.class);
 		RARE_TIER.add(EntityWitch.class);
 		RARE_TIER.add(EntityMagmaCube.class); // TODO Magma slime by size
@@ -91,10 +91,10 @@ public class Utils {
 		case 50000:
 			return MoneyItems.euro500;
 		}
-		
+
 		return null;
 	}
-	
+
 	public static boolean isItemMoney(ItemStack stack) {
 		ArrayList<ItemStack> moneys = OreDictionary.getOres("moneyDipo");
 		for (ItemStack money : moneys)
@@ -103,6 +103,29 @@ public class Utils {
 			}
 
 		return false;
+	}
+
+	public static ArrayList<ItemStack> getItemStacksByValue(int value) {
+		ArrayList<ItemStack> items = new ArrayList<ItemStack>();
+		int coins[] = { 50000, 20000, 10000, 5000, 2000, 1000, 500, 200, 100, 50, 20, 10, 5, 2, 1 };
+
+		for (int coin : coins) {
+			int temp = 0;
+			while (true) {
+				if (coin <= value) {
+					value -= coin;
+					temp++;
+				} else {
+					if (temp != 0) {
+						ItemStack stack = new ItemStack(getCoinByValue(coin), temp);
+						items.add(stack);
+					}
+					break;
+				}
+			}
+		}
+		
+		return items;
 	}
 
 	public static ArrayList<EntityItem> randomCoinValue(LivingDropsEvent event, int low, int high) {
@@ -116,13 +139,12 @@ public class Utils {
 				if (coin <= value) {
 					value -= coin;
 					ItemStack drop = new ItemStack(getCoinByValue(coin), 1);
-					itemsToDrop.add(new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY,
-							event.entity.posZ, drop));
+					itemsToDrop.add(new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ, drop));
 					break;
 				}
 			}
 		}
-		
+
 		return itemsToDrop;
 	}
 }
