@@ -1,7 +1,5 @@
 package sk.dipo.money.handler;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import cpw.mods.fml.common.eventhandler.EventPriority;
@@ -11,9 +9,11 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.world.WorldEvent;
+import sk.dipo.money.MoneyMod;
+import sk.dipo.money.database.Database;
 import sk.dipo.money.utils.Utils;
 
 public class MyEventHandler {
@@ -47,20 +47,17 @@ public class MyEventHandler {
 			return;
 		if (!(event.entity instanceof EntityPlayer))
 			return;
+		
 		EntityPlayer player = (EntityPlayer) event.entity;
-		NBTTagCompound nbt = player.getEntityData();
-		if (!nbt.hasKey("Balance"))
-			nbt.setInteger("Balance", 50000);
+		
+		if (!MoneyMod.db.exists("Players", player.getUniqueID().toString() + ".Balance"))
+			MoneyMod.db.set("Players", player.getUniqueID().toString() + ".Balance", 50000);
+	}
 
-		File file = new File(DimensionManager.getCurrentSaveRootDirectory().getAbsoluteFile() + "/dipomoney");
-		if (!file.exists())
-			file.mkdirs();
-		file = new File(file.getAbsoluteFile() + "/BankAccounts.dat");
-		try {
-			if (!file.exists())
-				file.createNewFile();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	@SubscribeEvent(priority = EventPriority.NORMAL, receiveCanceled = true)
+	public void onWorldLoad(WorldEvent.Load event) {
+		System.out.println("CreateIt");
+		MoneyMod.db = new Database("dipomoney");
+		MoneyMod.db.put("Players");
 	}
 }
