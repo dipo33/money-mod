@@ -5,13 +5,11 @@ import java.util.ArrayList;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.play.server.S2FPacketSetSlot;
 import sk.dipo.money.MoneyMod;
+import sk.dipo.money.network.packet.client.AtmMovingTextMessage;
 import sk.dipo.money.tileentity.TileEntityATM;
 import sk.dipo.money.utils.Utils;
 
@@ -53,15 +51,17 @@ public class WithdrawMessage implements IMessage {
 
 			int balance = MoneyMod.db.getInteger("Players", nbt.getString("OwnerUUID") + ".Balance");
 
-			System.out.println("BALANCE IS: " + balance + ", VALUE IS: " + message.value);
 			if (balance >= message.value) {
-				System.out.println("WITHDRAWING");
 				TileEntityATM atm = (TileEntityATM) player.worldObj.getTileEntity(message.x, message.y, message.z);
 				ArrayList<ItemStack> items = Utils.getItemStacksByValue(message.value);
 
 				for (ItemStack stack : items) {
 					atm.withdrawMoney(stack, player, message.x, message.y, message.z);
 				}
+				
+				balance -= message.value;
+				MoneyMod.db.set("Players", nbt.getString("OwnerUUID") + ".Balance", balance);
+				return new AtmMovingTextMessage("msg.atm.welcome", (short) 3, balance);
 			} else {
 				System.out.println("NOT ENOUGH MONEY");
 			}
