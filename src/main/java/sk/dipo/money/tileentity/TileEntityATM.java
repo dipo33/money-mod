@@ -1,11 +1,13 @@
 package sk.dipo.money.tileentity;
 
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.play.server.S2FPacketSetSlot;
 import net.minecraft.tileentity.TileEntity;
 import sk.dipo.money.network.PacketDispatcher;
 import sk.dipo.money.network.packet.client.AtmMovingTextMessage;
@@ -45,6 +47,35 @@ public class TileEntityATM extends TileEntity implements ISidedInventory {
 		}
 
 		return stack;
+	}
+
+	public void withdrawMoney(ItemStack stack, EntityPlayer player, int x, int y, int z) {
+		for (int i = 18; i < 36; i++) {
+			if (stack == null || stack.stackSize == 0)
+				return;
+			if (getStackInSlot(i) == null || getStackInSlot(i).stackSize == 0) {
+				setInventorySlotContents(i, stack);
+				((EntityPlayerMP) player).playerNetServerHandler.sendPacket(new S2FPacketSetSlot(player.openContainer.windowId, i, stack));
+				return;
+			} else if (getStackInSlot(i).getItem() == stack.getItem() && getStackInSlot(i).stackSize != 64) {
+				int newAmount = getStackInSlot(i).stackSize + stack.stackSize;
+				if (newAmount < 65) {
+					setInventorySlotContents(i, new ItemStack(stack.getItem(), newAmount));
+					((EntityPlayerMP) player).playerNetServerHandler.sendPacket(new S2FPacketSetSlot(player.openContainer.windowId, i, getStackInSlot(i)));
+					return;
+				} else {
+					int amountToRemove = 64 - getStackInSlot(i).stackSize;
+					setInventorySlotContents(i, new ItemStack(stack.getItem(), 64));
+					((EntityPlayerMP) player).playerNetServerHandler.sendPacket(new S2FPacketSetSlot(player.openContainer.windowId, i, getStackInSlot(i)));
+					stack = new ItemStack(stack.getItem(), stack.stackSize - amountToRemove);
+				}
+			}
+		}
+		
+		if (stack != null && stack.stackSize != 0) {
+			EntityItem item = new EntityItem(player.worldObj, x, y, z, stack);
+			player.worldObj.spawnEntityInWorld(item);
+		}
 	}
 
 	@Override
