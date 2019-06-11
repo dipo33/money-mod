@@ -22,7 +22,7 @@ import sk.dipo.money.utils.Reference;
 public class GuiATM extends GuiContainer implements Runnable {
 
 	private int posX, posY, posZ;
-	
+
 	private static final ResourceLocation atmGuiTexture = new ResourceLocation(Reference.MODID, "textures/gui/container/atm.png");
 	private final InventoryPlayer inventoryPlayer;
 	private final IInventory inventoryATM;
@@ -274,8 +274,20 @@ public class GuiATM extends GuiContainer implements Runnable {
 
 	private String toEur() {
 		String monety = money + "";
-		String part1 = monety.substring(0, monety.length() - 2);
-		String part2 = monety.substring(monety.length() - 2);
+		String part1, part2;
+
+		if (money > 99) {
+			part1 = monety.substring(0, monety.length() - 2);
+			part2 = monety.substring(monety.length() - 2);
+		} else {
+			if (money > 9) {
+				part1 = "0";
+				part2 = monety;
+			} else {
+				part1 = "0";
+				part2 = "0" + monety;
+			}
+		}
 		return part1 + "." + part2;
 	}
 
