@@ -11,6 +11,7 @@ import sk.dipo.money.network.packet.client.AbstractClientMessageHandler;
 import sk.dipo.money.network.packet.client.AtmMovingTextMessage;
 import sk.dipo.money.network.packet.client.OpenCloseAtmMessage;
 import sk.dipo.money.network.packet.server.CreatePinCodeMessage;
+import sk.dipo.money.network.packet.server.DepositMessage;
 import sk.dipo.money.network.packet.server.LoginMessage;
 import sk.dipo.money.network.packet.server.SignCreditCardMessage;
 import sk.dipo.money.network.packet.server.WithdrawMessage;
@@ -28,6 +29,7 @@ public class PacketDispatcher {
 		PacketDispatcher.registerMessage(CreatePinCodeMessage.Handler.class, CreatePinCodeMessage.class);
 		PacketDispatcher.registerMessage(LoginMessage.Handler.class, LoginMessage.class);
 		PacketDispatcher.registerMessage(WithdrawMessage.Handler.class, WithdrawMessage.class);
+		PacketDispatcher.registerMessage(DepositMessage.Handler.class, DepositMessage.class);
 	}
 
 	private static final <REQ extends IMessage, REPLY extends IMessage> void registerMessage(

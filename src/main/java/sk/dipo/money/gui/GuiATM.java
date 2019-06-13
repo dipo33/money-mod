@@ -13,6 +13,7 @@ import sk.dipo.money.container.ContainerATM;
 import sk.dipo.money.gui.button.GuiButtonATM;
 import sk.dipo.money.network.PacketDispatcher;
 import sk.dipo.money.network.packet.server.CreatePinCodeMessage;
+import sk.dipo.money.network.packet.server.DepositMessage;
 import sk.dipo.money.network.packet.server.LoginMessage;
 import sk.dipo.money.network.packet.server.SignCreditCardMessage;
 import sk.dipo.money.network.packet.server.WithdrawMessage;
@@ -163,6 +164,8 @@ public class GuiATM extends GuiContainer implements Runnable {
 			System.out.println("Logging in...");
 			PacketDispatcher.sendToServer(new LoginMessage(PIN));
 			clear();
+		} else if (phase == 3) {
+			PacketDispatcher.sendToServer(new DepositMessage(this.posX, this.posY, this.posZ));
 		}
 	}
 

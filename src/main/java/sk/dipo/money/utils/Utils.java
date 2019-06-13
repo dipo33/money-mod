@@ -95,6 +95,43 @@ public class Utils {
 		return null;
 	}
 
+	public static int getValueByMoney(ItemStack item) {
+		if (item == null)
+			return 0;
+		else if (item.getItem() == MoneyItems.cent1)
+			return item.stackSize * 1;
+		else if (item.getItem() == MoneyItems.cent2)
+			return item.stackSize * 2;
+		else if (item.getItem() == MoneyItems.cent5)
+			return item.stackSize * 5;
+		else if (item.getItem() == MoneyItems.cent10)
+			return item.stackSize * 10;
+		else if (item.getItem() == MoneyItems.cent20)
+			return item.stackSize * 20;
+		else if (item.getItem() == MoneyItems.cent50)
+			return item.stackSize * 50;
+		else if (item.getItem() == MoneyItems.euro1)
+			return item.stackSize * 100;
+		else if (item.getItem() == MoneyItems.euro2)
+			return item.stackSize * 200;
+		else if (item.getItem() == MoneyItems.euro5)
+			return item.stackSize * 500;
+		else if (item.getItem() == MoneyItems.euro10)
+			return item.stackSize * 1000;
+		else if (item.getItem() == MoneyItems.euro20)
+			return item.stackSize * 2000;
+		else if (item.getItem() == MoneyItems.euro50)
+			return item.stackSize * 5000;
+		else if (item.getItem() == MoneyItems.euro100)
+			return item.stackSize * 10000;
+		else if (item.getItem() == MoneyItems.euro200)
+			return item.stackSize * 20000;
+		else if (item.getItem() == MoneyItems.euro500)
+			return item.stackSize * 50000;
+
+		return 0;
+	}
+
 	public static boolean isItemMoney(ItemStack stack) {
 		ArrayList<ItemStack> moneys = OreDictionary.getOres("moneyDipo");
 		for (ItemStack money : moneys)
@@ -124,7 +161,7 @@ public class Utils {
 				}
 			}
 		}
-		
+
 		return items;
 	}
 

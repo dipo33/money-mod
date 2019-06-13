@@ -71,11 +71,23 @@ public class TileEntityATM extends TileEntity implements ISidedInventory {
 				}
 			}
 		}
-		
+
 		if (stack != null && stack.stackSize != 0) {
 			EntityItem item = new EntityItem(player.worldObj, x, y, z, stack);
 			player.worldObj.spawnEntityInWorld(item);
 		}
+	}
+
+	public int depositMoney(EntityPlayer player) {
+		int balance = 0;
+
+		for (int i = 0; i < 18; i++) {
+			balance += Utils.getValueByMoney(getStackInSlot(i));
+			setInventorySlotContents(i, null);
+			((EntityPlayerMP) player).playerNetServerHandler.sendPacket(new S2FPacketSetSlot(player.openContainer.windowId, i, null));
+		}
+
+		return balance;
 	}
 
 	@Override
