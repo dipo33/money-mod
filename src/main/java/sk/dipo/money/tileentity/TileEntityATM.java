@@ -23,6 +23,7 @@ public class TileEntityATM extends TileEntity implements ISidedInventory {
 	private ItemStack[] inventory = new ItemStack[INV_SIZE];
 	private String customName;
 	public boolean openable = true;
+	public int attempts = 3;
 	private EntityPlayer user;
 
 	@Override

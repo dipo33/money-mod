@@ -39,9 +39,12 @@ public class GuiATM extends GuiContainer implements Runnable {
 	private short dotPos = 0;
 
 	/**
-	 * Phase -1 - No phase Phase 0 - Signing credit card Phase 1 - Creating PIN code
-	 * Phase 2 - Logging to account using PIN code Phase 3 - Welcome Phase 4 - Card
-	 * eaten
+	 * Phase -1 - No phase
+	 * Phase 0 - Signing credit card
+	 * Phase 1 - Creating PIN code
+	 * Phase 2 - Logging to account using PIN code
+	 * Phase 3 - Welcome
+	 * Phase 4 - Card eaten
 	 */
 	private int phase;
 
@@ -162,7 +165,7 @@ public class GuiATM extends GuiContainer implements Runnable {
 			if (PIN.length() != 4)
 				return;
 			System.out.println("Logging in...");
-			PacketDispatcher.sendToServer(new LoginMessage(PIN));
+			PacketDispatcher.sendToServer(new LoginMessage(PIN, this.posX, this.posY, this.posZ));
 			clear();
 		} else if (phase == 3) {
 			PacketDispatcher.sendToServer(new DepositMessage(this.posX, this.posY, this.posZ));
@@ -270,7 +273,10 @@ public class GuiATM extends GuiContainer implements Runnable {
 	private String format(String str) {
 		if (messageType == 1) {
 			str = str.replaceAll("@", "%");
-			return String.format(str, toEur());
+			if (phase == 2)
+				return String.format(str, money);
+			else
+				return String.format(str, toEur());
 		} else if (messageType == 2) {
 			str = str.replaceAll("@", "%");
 			return String.format(str, name);

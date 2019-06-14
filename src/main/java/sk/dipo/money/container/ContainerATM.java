@@ -8,6 +8,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import sk.dipo.money.container.slot.SlotATMInput;
 import sk.dipo.money.container.slot.SlotATMOutput;
+import sk.dipo.money.item.MoneyItems;
 import sk.dipo.money.network.PacketDispatcher;
 import sk.dipo.money.network.packet.client.OpenCloseAtmMessage;
 import sk.dipo.money.tileentity.TileEntityATM;
@@ -17,8 +18,7 @@ public class ContainerATM extends Container {
 	private final IInventory inventoryATM;
 	private final TileEntityATM te;
 
-	private static final int INV_START = TileEntityATM.INV_SIZE, INV_END = INV_START + 26, HOTBAR_START = INV_END + 1,
-			HOTBAR_END = HOTBAR_START + 8;
+	private static final int INV_START = TileEntityATM.INV_SIZE, INV_END = INV_START + 26, HOTBAR_START = INV_END + 1, HOTBAR_END = HOTBAR_START + 8;
 
 	public ContainerATM(InventoryPlayer playerInventory, TileEntityATM inventoryATM) {
 		this.inventoryATM = inventoryATM;
@@ -28,11 +28,9 @@ public class ContainerATM extends Container {
 			for (int j = 0; j < 2; ++j) {
 				for (int k = 0; k < 9; ++k) {
 					if (i == 0)
-						this.addSlotToContainer(
-								new SlotATMInput(inventoryATM, k + j * 9 + i * 18, 42 + k * 18, j * 18 + i * 50 + 40));
+						this.addSlotToContainer(new SlotATMInput(inventoryATM, k + j * 9 + i * 18, 42 + k * 18, j * 18 + i * 50 + 40));
 					else
-						this.addSlotToContainer(
-								new SlotATMOutput(inventoryATM, k + j * 9 + i * 18, 42 + k * 18, j * 18 + i * 50 + 40));
+						this.addSlotToContainer(new SlotATMOutput(inventoryATM, k + j * 9 + i * 18, 42 + k * 18, j * 18 + i * 50 + 40));
 				}
 			}
 		}
@@ -95,7 +93,8 @@ public class ContainerATM extends Container {
 
 	@Override
 	public ItemStack slotClick(int slot, int button, int flag, EntityPlayer player) {
-		if (slot >= 0 && getSlot(slot) != null && getSlot(slot).getStack() == player.getHeldItem()) {
+		if (slot >= 0 && getSlot(slot) != null && getSlot(slot).getStack() == player.getHeldItem() && getSlot(slot).getStack() != null
+				&& getSlot(slot).getStack().getItem() == MoneyItems.creditCard) {
 			return null;
 		}
 
@@ -106,9 +105,9 @@ public class ContainerATM extends Container {
 	public void onContainerClosed(EntityPlayer player) {
 		super.onContainerClosed(player);
 		this.te.openable = true;
+		this.te.attempts = 3;
 		if (!player.worldObj.isRemote)
-			PacketDispatcher.sendToDimension(
-					new OpenCloseAtmMessage(true, this.te.xCoord, this.te.yCoord, this.te.zCoord),
+			PacketDispatcher.sendToDimension(new OpenCloseAtmMessage(true, this.te.xCoord, this.te.yCoord, this.te.zCoord),
 					player.worldObj.provider.dimensionId);
 	}
 }
