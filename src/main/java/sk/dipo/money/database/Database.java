@@ -1,12 +1,10 @@
 package sk.dipo.money.database;
 
 import java.io.File;
-import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
-import org.bukkit.configuration.file.YamlConfiguration;
-
+import io.bluecube.thunderbolt.Thunderbolt;
+import io.bluecube.thunderbolt.io.ThunderFile;
 import net.minecraftforge.common.DimensionManager;
 
 public class Database {
@@ -21,7 +19,7 @@ public class Database {
 		this.folder = folder;
 	}
 
-	public YamlConfiguration yml(String name) {
+	public ThunderFile yml(String name) {
 		try {
 			File file = null;
 			if (folder != null) {
@@ -29,9 +27,14 @@ public class Database {
 			} else {
 				file = new File(this.rootFolder, name + ".yml");
 			}
-			YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
-			return yml;
+			/*YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
+			return yml;*/
+
+			ThunderFile tfile = Thunderbolt.load(name, this.rootFolder + File.separator + folder);
+			Thunderbolt.unload(name);
+			return tfile;
 		} catch (Exception e) {
+			Thunderbolt.unload(name);
 			return null;
 		}
 	}
@@ -44,10 +47,14 @@ public class Database {
 			} else {
 				file = new File(this.rootFolder, name + ".yml");
 			}
-			YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
-			yml.save(file);
+			/*YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
+			yml.save(file);*/
+			
+			ThunderFile tfile = Thunderbolt.load(name, this.rootFolder + File.separator + folder);
+			tfile.save();
+			Thunderbolt.unload(name);
 		} catch (Exception e) {
-
+			Thunderbolt.unload(name);
 		}
 	}
 
@@ -65,11 +72,16 @@ public class Database {
 				file = new File(this.rootFolder, name + ".yml");
 			}
 			// Now that we have file lets load it as a YamlConfiguration.
-			YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
+			//YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
 			// And never forget to save!
-			yml.save(file);
+			//yml.save(file);
+
+			ThunderFile tfile = Thunderbolt.load(name, this.rootFolder + File.separator + folder);
+			tfile.save();
+			Thunderbolt.unload(name);
 			System.out.println("YML SAVED");
 		} catch (Exception e) {
+			Thunderbolt.unload(name);
 			e.printStackTrace();
 		}
 
@@ -84,11 +96,11 @@ public class Database {
 			} else {
 				file = new File(this.rootFolder, name + ".yml");
 			}
-			YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
+			/*YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
 			for (Entry<String, Object> e : objects.entrySet()) {
 				yml.set(e.getKey(), e.getValue());
 			}
-			yml.save(file);
+			yml.save(file);*/
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -103,12 +115,19 @@ public class Database {
 			} else {
 				file = new File(this.rootFolder, name + ".yml");
 			}
-			YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
+			/*YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
 			// This is the only Line diffrent from the basic "put" function.
 			yml.set(path, object);
 
-			yml.save(file);
+			yml.save(file);*/
+
+
+			ThunderFile tfile = Thunderbolt.load(name, this.rootFolder + File.separator + folder);
+			tfile.set(path, object);
+			tfile.save();
+			Thunderbolt.unload(name);
 		} catch (Exception e) {
+			Thunderbolt.unload(name);
 			e.printStackTrace();
 		}
 	}
@@ -121,10 +140,16 @@ public class Database {
 			} else {
 				file = new File(this.rootFolder, name + ".yml");
 			}
-			YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
-			return yml.getString(path);
-		} catch (Exception e) {
+			/*YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
+			return yml.getString(path);*/
 
+
+			ThunderFile tfile = Thunderbolt.load(name, this.rootFolder + File.separator + folder);
+			String item = tfile.getString(path);
+			Thunderbolt.unload(name);
+			return item;
+		} catch (Exception e) {
+			Thunderbolt.unload(name);
 		}
 		return null;
 	}
@@ -137,15 +162,20 @@ public class Database {
 			} else {
 				file = new File(this.rootFolder, name + ".yml");
 			}
-			YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
-			return yml.getInt(path);
-		} catch (Exception e) {
+			/*YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
+			return yml.getInt(path);*/
 
+			ThunderFile tfile = Thunderbolt.load(name, this.rootFolder + File.separator + folder);
+			int item = tfile.getInt(path);
+			Thunderbolt.unload(name);
+			return item;
+		} catch (Exception e) {
+			Thunderbolt.unload(name);
 		}
 		return 0;
 	}
 
-	public double getDouble(String name, String path) {
+	/*public double getDouble(String name, String path) {
 		try {
 			File file = null;
 			if (folder != null) {
@@ -159,9 +189,9 @@ public class Database {
 
 		}
 		return 0;
-	}
+	}*/
 
-	public boolean getBoolean(String name, String path) {
+	/*public boolean getBoolean(String name, String path) {
 		try {
 			File file = null;
 			if (folder != null) {
@@ -175,9 +205,9 @@ public class Database {
 
 		}
 		return false;
-	}
+	}*/
 
-	public List<Integer> getIntegerList(String name, String path) {
+	/*public List<Integer> getIntegerList(String name, String path) {
 		try {
 			File file = null;
 			if (folder != null) {
@@ -191,9 +221,9 @@ public class Database {
 
 		}
 		return null;
-	}
+	}*/
 
-	public List<Double> getDoubleList(String name, String path) {
+	/*public List<Double> getDoubleList(String name, String path) {
 		try {
 			File file = null;
 			if (folder != null) {
@@ -207,9 +237,9 @@ public class Database {
 
 		}
 		return null;
-	}
+	}*/
 
-	public List<String> getStringList(String name, String path) {
+	/*public List<String> getStringList(String name, String path) {
 		try {
 			File file = null;
 			if (folder != null) {
@@ -223,9 +253,9 @@ public class Database {
 
 		}
 		return null;
-	}
+	}*/
 
-	public Map<?, ?> getEnchantmentMap(String name, String path) {
+	/*public Map<?, ?> getEnchantmentMap(String name, String path) {
 		try {
 			File file = null;
 			if (folder != null) {
@@ -239,7 +269,7 @@ public class Database {
 
 		}
 		return null;
-	}
+	}*/
 
 	public boolean exists(String name, String path) {
 		try {
@@ -249,10 +279,15 @@ public class Database {
 			} else {
 				file = new File(this.rootFolder, name + ".yml");
 			}
-			YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
-			return yml.get(path) != null;
-		} catch (Exception e) {
+			/*YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
+			return yml.get(path) != null;*/
 
+			ThunderFile tfile = Thunderbolt.load(name, this.rootFolder + File.separator + folder);
+			boolean item = tfile.get(path) != null;
+			Thunderbolt.unload(name);
+			return item;
+		} catch (Exception e) {
+			Thunderbolt.unload(name);
 		}
 		return false;
 	}
