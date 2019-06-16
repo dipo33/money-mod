@@ -21,15 +21,6 @@ public class Database {
 
 	public ThunderFile yml(String name) {
 		try {
-			File file = null;
-			if (folder != null) {
-				file = new File(this.rootFolder + File.separator + folder, name + ".yml");
-			} else {
-				file = new File(this.rootFolder, name + ".yml");
-			}
-			/*YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
-			return yml;*/
-
 			ThunderFile tfile = Thunderbolt.load(name, this.rootFolder + File.separator + folder);
 			Thunderbolt.unload(name);
 			return tfile;
@@ -41,15 +32,6 @@ public class Database {
 
 	public void save(String name) {
 		try {
-			File file = null;
-			if (folder != null) {
-				file = new File(this.rootFolder + File.separator + folder, name + ".yml");
-			} else {
-				file = new File(this.rootFolder, name + ".yml");
-			}
-			/*YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
-			yml.save(file);*/
-			
 			ThunderFile tfile = Thunderbolt.load(name, this.rootFolder + File.separator + folder);
 			tfile.save();
 			Thunderbolt.unload(name);
@@ -61,21 +43,6 @@ public class Database {
 	// Puts the file "name" in the database.
 	public void put(String name) {
 		try {
-			// Creates the file.
-			File file = null;
-			// If there's a folder, (the database at the main config folder)
-			if (folder != null) {
-				// File.separator is like those "folder / inFolder" things.
-				file = new File(this.rootFolder + File.separator + folder, name + ".yml");
-			} else {
-				// getDataFolder() refers to the plugin configuration folder.
-				file = new File(this.rootFolder, name + ".yml");
-			}
-			// Now that we have file lets load it as a YamlConfiguration.
-			//YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
-			// And never forget to save!
-			//yml.save(file);
-
 			ThunderFile tfile = Thunderbolt.load(name, this.rootFolder + File.separator + folder);
 			tfile.save();
 			Thunderbolt.unload(name);
@@ -88,7 +55,7 @@ public class Database {
 	}
 
 	// Map<String path, Object obj> Put obj at path.
-	public void put(String name, Map<String, Object> objects) {
+	/*public void put(String name, Map<String, Object> objects) {
 		try {
 			File file = null;
 			if (folder != null) {
@@ -96,32 +63,19 @@ public class Database {
 			} else {
 				file = new File(this.rootFolder, name + ".yml");
 			}
-			/*YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
+			YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
 			for (Entry<String, Object> e : objects.entrySet()) {
 				yml.set(e.getKey(), e.getValue());
 			}
-			yml.save(file);*/
+			yml.save(file);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 	// Store's a object in path.
 	public void set(String name, String path, Object object) {
 		try {
-			File file = null;
-			if (folder != null) {
-				file = new File(this.rootFolder + File.separator + folder, name + ".yml");
-			} else {
-				file = new File(this.rootFolder, name + ".yml");
-			}
-			/*YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
-			// This is the only Line diffrent from the basic "put" function.
-			yml.set(path, object);
-
-			yml.save(file);*/
-
-
 			ThunderFile tfile = Thunderbolt.load(name, this.rootFolder + File.separator + folder);
 			tfile.set(path, object);
 			tfile.save();
@@ -134,16 +88,6 @@ public class Database {
 
 	public String getString(String name, String path) {
 		try {
-			File file = null;
-			if (folder != null) {
-				file = new File(this.rootFolder + File.separator + folder, name + ".yml");
-			} else {
-				file = new File(this.rootFolder, name + ".yml");
-			}
-			/*YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
-			return yml.getString(path);*/
-
-
 			ThunderFile tfile = Thunderbolt.load(name, this.rootFolder + File.separator + folder);
 			String item = tfile.getString(path);
 			Thunderbolt.unload(name);
@@ -156,15 +100,6 @@ public class Database {
 
 	public int getInteger(String name, String path) {
 		try {
-			File file = null;
-			if (folder != null) {
-				file = new File(this.rootFolder + File.separator + folder, name + ".yml");
-			} else {
-				file = new File(this.rootFolder, name + ".yml");
-			}
-			/*YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
-			return yml.getInt(path);*/
-
 			ThunderFile tfile = Thunderbolt.load(name, this.rootFolder + File.separator + folder);
 			int item = tfile.getInt(path);
 			Thunderbolt.unload(name);
@@ -273,15 +208,6 @@ public class Database {
 
 	public boolean exists(String name, String path) {
 		try {
-			File file = null;
-			if (folder != null) {
-				file = new File(this.rootFolder + File.separator + folder, name + ".yml");
-			} else {
-				file = new File(this.rootFolder, name + ".yml");
-			}
-			/*YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
-			return yml.get(path) != null;*/
-
 			ThunderFile tfile = Thunderbolt.load(name, this.rootFolder + File.separator + folder);
 			boolean item = tfile.get(path) != null;
 			Thunderbolt.unload(name);
