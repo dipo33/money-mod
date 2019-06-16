@@ -11,11 +11,17 @@ public class Database {
 	private String folder;
 
 	public Database() {
-		this.folder = null;
+		this(null);
 	}
 
 	public Database(String folder) {
 		this.folder = folder;
+
+		File file = null;
+		if (folder != null) {
+			file = new File(this.rootFolder + File.separator + folder);
+			file.mkdirs();
+		}
 	}
 
 	public ThunderFile yml(String name) {
@@ -54,23 +60,15 @@ public class Database {
 	}
 
 	// Map<String path, Object obj> Put obj at path.
-	/*public void put(String name, Map<String, Object> objects) {
-		try {
-			File file = null;
-			if (folder != null) {
-				file = new File(this.rootFolder + File.separator + folder, name + ".yml");
-			} else {
-				file = new File(this.rootFolder, name + ".yml");
-			}
-			YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
-			for (Entry<String, Object> e : objects.entrySet()) {
-				yml.set(e.getKey(), e.getValue());
-			}
-			yml.save(file);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}*/
+	/*
+	 * public void put(String name, Map<String, Object> objects) { try { File file =
+	 * null; if (folder != null) { file = new File(this.rootFolder + File.separator
+	 * + folder, name + ".yml"); } else { file = new File(this.rootFolder, name +
+	 * ".yml"); } YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
+	 * for (Entry<String, Object> e : objects.entrySet()) { yml.set(e.getKey(),
+	 * e.getValue()); } yml.save(file); } catch (Exception e) { e.printStackTrace();
+	 * } }
+	 */
 
 	// Store's a object in path.
 	public void set(String name, String path, Object object) {
@@ -109,21 +107,15 @@ public class Database {
 		return 0;
 	}
 
-	/*public double getDouble(String name, String path) {
-		try {
-			File file = null;
-			if (folder != null) {
-				file = new File(this.rootFolder + File.separator + folder, name + ".yml");
-			} else {
-				file = new File(this.rootFolder, name + ".yml");
-			}
-			YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
-			return yml.getDouble(path);
-		} catch (Exception e) {
-
-		}
-		return 0;
-	}*/
+	/*
+	 * public double getDouble(String name, String path) { try { File file = null;
+	 * if (folder != null) { file = new File(this.rootFolder + File.separator +
+	 * folder, name + ".yml"); } else { file = new File(this.rootFolder, name +
+	 * ".yml"); } YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
+	 * return yml.getDouble(path); } catch (Exception e) {
+	 * 
+	 * } return 0; }
+	 */
 
 	public boolean getBoolean(String name, String path) {
 		try {
@@ -137,69 +129,49 @@ public class Database {
 		return false;
 	}
 
-	/*public List<Integer> getIntegerList(String name, String path) {
-		try {
-			File file = null;
-			if (folder != null) {
-				file = new File(this.rootFolder + File.separator + folder, name + ".yml");
-			} else {
-				file = new File(this.rootFolder, name + ".yml");
-			}
-			YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
-			return yml.getIntegerList(path);
-		} catch (Exception e) {
+	/*
+	 * public List<Integer> getIntegerList(String name, String path) { try { File
+	 * file = null; if (folder != null) { file = new File(this.rootFolder +
+	 * File.separator + folder, name + ".yml"); } else { file = new
+	 * File(this.rootFolder, name + ".yml"); } YamlConfiguration yml =
+	 * YamlConfiguration.loadConfiguration(file); return yml.getIntegerList(path); }
+	 * catch (Exception e) {
+	 * 
+	 * } return null; }
+	 */
 
-		}
-		return null;
-	}*/
+	/*
+	 * public List<Double> getDoubleList(String name, String path) { try { File file
+	 * = null; if (folder != null) { file = new File(this.rootFolder +
+	 * File.separator + folder, name + ".yml"); } else { file = new
+	 * File(this.rootFolder, name + ".yml"); } YamlConfiguration yml =
+	 * YamlConfiguration.loadConfiguration(file); return yml.getDoubleList(path); }
+	 * catch (Exception e) {
+	 * 
+	 * } return null; }
+	 */
 
-	/*public List<Double> getDoubleList(String name, String path) {
-		try {
-			File file = null;
-			if (folder != null) {
-				file = new File(this.rootFolder + File.separator + folder, name + ".yml");
-			} else {
-				file = new File(this.rootFolder, name + ".yml");
-			}
-			YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
-			return yml.getDoubleList(path);
-		} catch (Exception e) {
+	/*
+	 * public List<String> getStringList(String name, String path) { try { File file
+	 * = null; if (folder != null) { file = new File(this.rootFolder +
+	 * File.separator + folder, name + ".yml"); } else { file = new
+	 * File(this.rootFolder, name + ".yml"); } YamlConfiguration yml =
+	 * YamlConfiguration.loadConfiguration(file); return yml.getStringList(path); }
+	 * catch (Exception e) {
+	 * 
+	 * } return null; }
+	 */
 
-		}
-		return null;
-	}*/
-
-	/*public List<String> getStringList(String name, String path) {
-		try {
-			File file = null;
-			if (folder != null) {
-				file = new File(this.rootFolder + File.separator + folder, name + ".yml");
-			} else {
-				file = new File(this.rootFolder, name + ".yml");
-			}
-			YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
-			return yml.getStringList(path);
-		} catch (Exception e) {
-
-		}
-		return null;
-	}*/
-
-	/*public Map<?, ?> getEnchantmentMap(String name, String path) {
-		try {
-			File file = null;
-			if (folder != null) {
-				file = new File(this.rootFolder + File.separator + folder, name + ".yml");
-			} else {
-				file = new File(this.rootFolder, name + ".yml");
-			}
-			YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
-			return yml.getMapList(path).get(0);
-		} catch (Exception e) {
-
-		}
-		return null;
-	}*/
+	/*
+	 * public Map<?, ?> getEnchantmentMap(String name, String path) { try { File
+	 * file = null; if (folder != null) { file = new File(this.rootFolder +
+	 * File.separator + folder, name + ".yml"); } else { file = new
+	 * File(this.rootFolder, name + ".yml"); } YamlConfiguration yml =
+	 * YamlConfiguration.loadConfiguration(file); return
+	 * yml.getMapList(path).get(0); } catch (Exception e) {
+	 * 
+	 * } return null; }
+	 */
 
 	public boolean exists(String name, String path) {
 		try {
