@@ -234,7 +234,7 @@ public class GuiATM extends GuiContainer implements Runnable {
 					if (withdrawValue < 10 && dotPos == 2) {
 						pinCode = "0.0" + withdrawValue + "€";
 					} else {
-						String temp = (withdrawValue + "").substring(0, (withdrawValue + "").length() - dotPos); // TODO neda sa napisat 0.01
+						String temp = (withdrawValue + "").substring(0, (withdrawValue + "").length() - dotPos);
 						pinCode = (temp.length() == 0 ? "0" : temp) + "." + (withdrawValue + "").substring((withdrawValue + "").length() - dotPos) + "€";
 					}
 				} else {

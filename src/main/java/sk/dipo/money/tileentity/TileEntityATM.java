@@ -166,7 +166,7 @@ public class TileEntityATM extends TileEntity implements ISidedInventory {
 
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer player) {
-		return true; // TODO Check if players is not too far from block
+		return true;
 	}
 
 	@Override
