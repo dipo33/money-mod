@@ -28,7 +28,8 @@ public class CommonProxy {
 	public void init(FMLInitializationEvent event) {
 		OreDicts.registerOreDicts();
 		CraftingRecipes.registerRecipes();
-		CommonRegisters.registerVillagers();
+		if (Config.allowVillager)
+			CommonRegisters.registerVillagers();
 		CommonRegisters.registerHandlers();
 		CommonRegisters.registerEventHandlers();
 		CommonRegisters.registerTileEntities();

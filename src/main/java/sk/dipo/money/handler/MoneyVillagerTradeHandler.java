@@ -8,7 +8,8 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
-import sk.dipo.money.item.MoneyItems;
+import sk.dipo.money.utils.Config;
+import sk.dipo.money.utils.Utils;
 
 public class MoneyVillagerTradeHandler implements VillagerRegistry.IVillageTradeHandler {
 
@@ -16,9 +17,9 @@ public class MoneyVillagerTradeHandler implements VillagerRegistry.IVillageTrade
 
 	@Override
 	public void manipulateTradesForVillager(EntityVillager villager, MerchantRecipeList recipeList, Random random) {
-		if (villager.getProfession() == VILLAGER_EXCHANGER_ID) {
-			recipeList.addToListWithCheck(
-					new MerchantRecipe(new ItemStack(Items.emerald), new ItemStack(MoneyItems.euro5)));
-		}
+		if (Config.allowVillager)
+			if (villager.getProfession() == VILLAGER_EXCHANGER_ID) {
+				recipeList.addToListWithCheck(new MerchantRecipe(new ItemStack(Items.emerald), new ItemStack(Utils.getCoinByValue(Config.emeraldValue))));
+			}
 	}
 }

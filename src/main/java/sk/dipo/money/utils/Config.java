@@ -6,7 +6,9 @@ import net.minecraftforge.common.config.Configuration;
 public class Config {
 
 	public static boolean shouldMobsDropMoney;
+	public static boolean allowVillager;
 
+	public static int emeraldValue;
 	public static int zombieDropMin;
 	public static int zombieDropMax;
 	public static int skeletonDropMin;
@@ -54,6 +56,8 @@ public class Config {
 		Configuration config = new Configuration(event.getSuggestedConfigurationFile());
 		config.load();
 
+		allowVillager = config.getBoolean("allowVillager", Configuration.CATEGORY_GENERAL, true, "Allow custom villager to trade emerald for money");
+		emeraldValue = config.getInt("emeraldValue", Configuration.CATEGORY_GENERAL, 500, 1, 50000, "Value of emerald in cents when trading with villager [ALLOWED VALUES: 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000]");
 
 		shouldMobsDropMoney = config.getBoolean("shouldMobsDropMoney", "Mobs", true, "Allow mobs to drop money when killed");
 		zombieDropMin = config.getInt("zombieDropMin", "Mobs.Zombie", 1, 0, 500000, "Minimum amount of money dropped by zombie (value is in cents)");
