@@ -46,15 +46,17 @@ public class MyEventHandler {
 			return;
 		if (!(event.entity instanceof EntityPlayer))
 			return;
-		
+
 		EntityPlayer player = (EntityPlayer) event.entity;
-		
+
 		if (!MoneyMod.db.exists("Players", player.getUniqueID().toString() + ".Balance"))
 			MoneyMod.db.set("Players", player.getUniqueID().toString() + ".Balance", 50000);
 	}
 
 	@SubscribeEvent(priority = EventPriority.NORMAL, receiveCanceled = true)
 	public void onWorldLoad(WorldEvent.Load event) {
+		if (event.world.isRemote)
+			return;
 		System.out.println("CreateIt");
 		MoneyMod.db = new Database("dipomoney");
 		MoneyMod.db.put("Players");
