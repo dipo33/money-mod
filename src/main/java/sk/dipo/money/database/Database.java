@@ -1,7 +1,6 @@
 package sk.dipo.money.database;
 
 import java.io.File;
-import java.util.Map;
 
 import io.bluecube.thunderbolt.Thunderbolt;
 import io.bluecube.thunderbolt.io.ThunderFile;
@@ -126,21 +125,17 @@ public class Database {
 		return 0;
 	}*/
 
-	/*public boolean getBoolean(String name, String path) {
+	public boolean getBoolean(String name, String path) {
 		try {
-			File file = null;
-			if (folder != null) {
-				file = new File(this.rootFolder + File.separator + folder, name + ".yml");
-			} else {
-				file = new File(this.rootFolder, name + ".yml");
-			}
-			YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
-			return yml.getBoolean(path);
+			ThunderFile tfile = Thunderbolt.load(name, this.rootFolder + File.separator + folder);
+			boolean item = tfile.getBoolean(path);
+			Thunderbolt.unload(name);
+			return item;
 		} catch (Exception e) {
-
+			Thunderbolt.unload(name);
 		}
 		return false;
-	}*/
+	}
 
 	/*public List<Integer> getIntegerList(String name, String path) {
 		try {

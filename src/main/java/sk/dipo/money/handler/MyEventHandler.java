@@ -8,11 +8,13 @@ import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import sk.dipo.money.MoneyMod;
 import sk.dipo.money.database.Database;
+import sk.dipo.money.item.MoneyItems;
 import sk.dipo.money.utils.Utils;
 
 public class MyEventHandler {
@@ -49,8 +51,10 @@ public class MyEventHandler {
 
 		EntityPlayer player = (EntityPlayer) event.entity;
 
-		if (!MoneyMod.db.exists("Players", player.getUniqueID().toString() + ".Balance"))
+		if (!MoneyMod.db.exists("Players", player.getUniqueID().toString() + ".Balance")) {
 			MoneyMod.db.set("Players", player.getUniqueID().toString() + ".Balance", 50000);
+			player.inventory.addItemStackToInventory(new ItemStack(MoneyItems.creditCard));
+		}
 	}
 
 	@SubscribeEvent(priority = EventPriority.NORMAL, receiveCanceled = true)
