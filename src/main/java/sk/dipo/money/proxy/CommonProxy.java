@@ -13,6 +13,7 @@ import sk.dipo.money.register.BlockRegister;
 import sk.dipo.money.register.CommonRegisters;
 import sk.dipo.money.register.ItemRegister;
 import sk.dipo.money.register.OreDicts;
+import sk.dipo.money.utils.Config;
 
 public class CommonProxy {
 
@@ -20,6 +21,7 @@ public class CommonProxy {
 		ItemRegister.registerItems();
 		BlockRegister.registerBlocks();
 		PacketDispatcher.registerPackets();
+		Config.loadConfiguration(event);
 		MoneyMod.LOGGER.info("FMLPreInitializationEvent on Server side");
 	}
 

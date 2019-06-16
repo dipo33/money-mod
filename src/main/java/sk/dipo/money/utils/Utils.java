@@ -3,21 +3,7 @@ package sk.dipo.money.utils;
 import java.util.ArrayList;
 import java.util.Random;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.monster.EntityBlaze;
-import net.minecraft.entity.monster.EntityCaveSpider;
-import net.minecraft.entity.monster.EntityCreeper;
-import net.minecraft.entity.monster.EntityEnderman;
-import net.minecraft.entity.monster.EntityGhast;
-import net.minecraft.entity.monster.EntityMagmaCube;
-import net.minecraft.entity.monster.EntityPigZombie;
-import net.minecraft.entity.monster.EntitySilverfish;
-import net.minecraft.entity.monster.EntitySkeleton;
-import net.minecraft.entity.monster.EntitySlime;
-import net.minecraft.entity.monster.EntitySpider;
-import net.minecraft.entity.monster.EntityWitch;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
@@ -25,39 +11,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import sk.dipo.money.item.MoneyItems;
 
 public class Utils {
-
-	public static final ArrayList<Class<? extends Entity>> LOW_TIER;
-	public static final ArrayList<Class<? extends Entity>> MID_TIER;
-	public static final ArrayList<Class<? extends Entity>> HIGH_TIER;
-	public static final ArrayList<Class<? extends Entity>> RARE_TIER;
-	public static final ArrayList<Class<? extends Entity>> LEGENDARY_TIER;
-
-	static {
-		LOW_TIER = new ArrayList<Class<? extends Entity>>();
-		LOW_TIER.add(EntitySkeleton.class);
-		LOW_TIER.add(EntityCreeper.class);
-		LOW_TIER.add(EntitySpider.class);
-		LOW_TIER.add(EntitySilverfish.class);
-
-		MID_TIER = new ArrayList<Class<? extends Entity>>();
-		MID_TIER.add(EntitySlime.class); // TODO Slime by size
-		MID_TIER.add(EntityCaveSpider.class);
-
-		HIGH_TIER = new ArrayList<Class<? extends Entity>>();
-		HIGH_TIER.add(EntityGhast.class);
-		HIGH_TIER.add(EntityBlaze.class);
-		HIGH_TIER.add(EntityPigZombie.class);
-
-		RARE_TIER = new ArrayList<Class<? extends Entity>>(); // WITHER + DRAGON = 50€
-		RARE_TIER.add(EntityEnderman.class);
-		RARE_TIER.add(EntityWitch.class);
-		RARE_TIER.add(EntityMagmaCube.class); // TODO Magma slime by size
-		// TODO Can't find WitherSkeleton
-
-		LEGENDARY_TIER = new ArrayList<Class<? extends Entity>>();
-		LEGENDARY_TIER.add(EntityWither.class);
-	}
-
+	
 	public static Item getCoinByValue(int value) {
 		switch (value) {
 		case 1:
